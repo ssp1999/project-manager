@@ -1,6 +1,8 @@
 <template>
   <div>
-    body
+    <nuxt-layout>
+      <nuxt-page />
+    </nuxt-layout>
   </div>
 </template>
 
@@ -9,6 +11,4 @@ import { ref } from 'vue'
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -7,6 +7,6 @@
 </template>
 
 <script setup>
-import Header from './layout/Header.vue'
-import Body from './layout/Body.vue'
+import Header from './layouts/Header.vue'
+import Body from './layouts/Body.vue'
 </script>

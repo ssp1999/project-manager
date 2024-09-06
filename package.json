@@ -17,6 +17,8 @@
   "devDependencies": {
     "@bootstrap-vue-next/nuxt": "^0.24.12",
     "bootstrap": "^5.3.3",
-    "bootstrap-vue-next": "^0.24.12"
+    "bootstrap-vue-next": "^0.24.12",
+    "sass": "^1.78.0",
+    "sass-loader": "^16.0.1"
   }
 }

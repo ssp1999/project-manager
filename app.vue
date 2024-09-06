@@ -1,5 +1,12 @@
 <template>
   <div>
-    <b-button variant="danger">teste</b-button>
+    <Header />
+
+    <Body />
   </div>
 </template>
+
+<script setup>
+import Header from './layout/Header.vue'
+import Body from './layout/Body.vue'
+</script>

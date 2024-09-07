@@ -62,9 +62,4 @@ import { ref } from 'vue'
   font-size: 16px;
 }
 
-.btn-transparent {
-  background-color: transparent !important;
-  border: none !important;
-  color: #FFF;
-}
 </style>

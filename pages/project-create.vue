@@ -1,12 +1,12 @@
 <template>
   <div>
-    <project-index/>
+    <project-form/>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import ProjectIndex from './components/projects/ProjectIndex.vue'
+import ProjectForm from './components/projects/ProjectForm.vue'
 
 </script>
 

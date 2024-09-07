@@ -1,5 +1,6 @@
 <template>
   <div class="m-5">
+    <page-header pageTitle="Projetos" :returnLink="false" :showCounter="true" :showFilters="true" />
     <b-card class="project-card">
       <template #img>
         <div class="project-card-image">
@@ -60,8 +61,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import ProjectRemove from './ProjectRemove.vue';
+import ProjectRemove from './ProjectRemove.vue'
+import PageHeader from '../pages/PageHeader.vue'
 
 </script>
 

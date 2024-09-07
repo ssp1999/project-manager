@@ -1,10 +1,6 @@
 <template>
   <div class="m-5">
-    <nuxt-link to="/" class="text-decoration-none">
-      <i class="bi bi-arrow-left"></i>
-      <span class="px-2">Voltar</span>
-    </nuxt-link>
-    <h1 class="page-title">{{ formTitle }}</h1>
+    <page-header :pageTitle="formTitle" />
 
     <b-card class="card-form d-flex justify-content-center align-items-center text-center">
       <form class="my-5 px-4 min-form-width">
@@ -29,6 +25,7 @@
 
 <script setup lang="ts">
 import FormInput from '../form/FormInput.vue'
+import PageHeader from '../pages/PageHeader.vue'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -56,5 +53,4 @@ const formTitle = computed(() => props.formType === 'create' ? 'Novo Projeto' : 
     min-width: 100%;
   }
 }
-
 </style>

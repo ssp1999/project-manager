@@ -52,6 +52,7 @@ defineProps({
 .page-title {
   color: #1F1283;
   font-size: 24px;
+  font-weight: 600;
 }
 
 .counter {

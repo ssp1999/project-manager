@@ -88,6 +88,7 @@ import PageHeader from '../pages/PageHeader.vue'
 .project-card-title {
   color: #1F1283;
   font-size: 20px;
+  font-weight: 700;
 }
 
 .project-card-text {

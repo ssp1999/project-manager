@@ -1,6 +1,6 @@
 <template>
   <div>
-    <project-form />
+    <project-form formType="edit" />
   </div>
 </template>
 

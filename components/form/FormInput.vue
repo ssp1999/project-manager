@@ -8,11 +8,7 @@
         </div>
       </template>
       <template v-if="type === 'file'">
-        <b-card class="form-input-file d-flex justify-content-center align-items-center text-center my-auto">
-          <i class="bi bi-upload icon"></i>
-          <p>Escolha uma imagem .jpg ou .png no seu dispositivo</p>
-          <b-button pill variant="outline-primary" class="bg-white">Selecionar</b-button>
-        </b-card>
+        <form-input-file />
       </template>
       <b-form-input :id="id" v-model="inputValue" trim :type="type" v-else />
     </b-form-group>
@@ -21,6 +17,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import FormInputFile from './FormInputFile.vue';
 
 const props = defineProps({
   id: {
@@ -60,10 +57,9 @@ const inputValue = ref('')
   color: #717171;
   font-size: 16px;
   /* min-height: 174px; */
-  
+
   .icon {
     font-size: 24px;
   }
 }
-
 </style>

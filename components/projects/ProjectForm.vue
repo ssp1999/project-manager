@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import FormInput from '../FormInput.vue'
+import FormInput from '../form/FormInput.vue'
 import { computed } from 'vue'
 
 const props = defineProps({

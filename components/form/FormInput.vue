@@ -17,16 +17,16 @@
 
 <script setup>
 import { ref } from 'vue'
-import FormInputFile from './FormInputFile.vue';
+import FormInputFile from './FormInputFile.vue'
 
 const props = defineProps({
   id: {
     type: String,
-    default: 'text'
+    required: true
   },
   type: {
     type: String,
-    required: true
+    default: 'text'
   },
   label: {
     type: String,

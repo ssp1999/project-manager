@@ -1,9 +1,9 @@
 <template>
   <div class="m-5">
-    <b-link underline-opacity="0" href="/">
+    <nuxt-link to="/" class="text-decoration-none">
       <i class="bi bi-arrow-left"></i>
       <span class="px-2">Voltar</span>
-    </b-link>
+    </nuxt-link>
     <h1 class="page-title">{{ formTitle }}</h1>
 
     <b-card class="card-form d-flex justify-content-center align-items-center text-center">
@@ -34,7 +34,6 @@ import { computed } from 'vue'
 const props = defineProps({
   formType: {
     type: String,
-    required: true,
     default: 'create'
   }
 })

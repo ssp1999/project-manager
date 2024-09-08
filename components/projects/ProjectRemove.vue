@@ -6,17 +6,41 @@
     <h5 class="modal-title">Remover projeto</h5>
     <hr>
     <p class="modal-text">Essa ação removerá definitivamente o projeto:</p>
-    <p class="modal-project-name">Nome do projeto</p>
+    <p class="modal-project-name">{{ project.name }}</p>
 
     <div class="d-flex justify-content-center gap-2">
-      <b-button pill size="lg" variant="outline-primary" class="modal-button">Cancelar</b-button>
-      <b-button pill size="lg" variant="primary" class="modal-button">Confirmar</b-button>
+      <b-button pill size="lg" variant="outline-primary" class="modal-button" @click="cancel">Cancelar</b-button>
+      <b-button pill size="lg" variant="primary" class="modal-button" @click="confirmRemove">Confirmar</b-button>
     </div>
   </b-modal>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import projectService from '~/services/projectService.ts'
+
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true,
+  }
+})
+
+const emit = defineEmits(['remove:project'])
+
+const cancel = () => {
+  //
+}
+
+const confirmRemove = async () => {
+  try {
+    console,log(props.project)
+    await projectService.deleteProject(props.project.id)
+    emit('remove:project', props.project.id)
+    cancel()
+  } catch (error) {
+    console.error('Error removing project:', error)
+  }
+}
 </script>
 
 <style scoped>

@@ -28,7 +28,7 @@
                   <i class="bi bi-trash3"></i>
                   Remover
                 </div>
-                <project-remove />
+                <project-remove :project="project" @remove:project="removeProject" />
               </b-dropdown-item>
             </b-dropdown>
           </client-only>
@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineProps } from 'vue'
 import ProjectRemove from './ProjectRemove.vue'
 import defaultImage from '~/assets/images/image.png'
 import projectService from '~/services/projectService.ts'
@@ -95,6 +95,14 @@ const toggleFavorite = async () => {
     emit('update:favorite', updatedProject)
   } catch (error) {
     console.error('Error toggling favorite status:', error)
+  }
+}
+
+const removeProject = async (projectId) => {
+  try {
+    console.log('Project removed with id:', projectId)
+  } catch (error) {
+    console.error('Error removing project:', error)
   }
 }
 </script>

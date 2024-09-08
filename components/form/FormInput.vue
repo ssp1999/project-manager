@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-form-group :label-for="id" class="mb-3">
+    <b-form-group :id="id" :description="description" :label="label" :label-for="id" :invalid-feedback="invalidFeedback"
+      :state="computedState" class="mb-3">
       <template #label>
         <div class="d-flex align-items-center">
           <h5 class="form-input-label mb-0">{{ label }}</h5>
@@ -10,13 +11,15 @@
       <template v-if="type === 'file'">
         <form-input-file />
       </template>
-      <b-form-input :id="id" v-model="inputValue" trim :type="type" v-else />
+      
+      <b-form-input v-else :id="id" v-model="inputValue" trim :type="type" :state="computedState"
+        @input="updateValue" />
     </b-form-group>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import FormInputFile from './FormInputFile.vue'
 
 const props = defineProps({
@@ -35,11 +38,61 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false
+  },
+  description: {
+    type: String,
+    default: ''
+  },
+  isSubmitted: {
+    type: Boolean,
+    default: false
+  },
+  modelValue: {
+    type: String,
+    default: ''
   }
 })
 
-const inputValue = ref('')
+const emit = defineEmits(['update:modelValue'])
+
+const inputValue = ref(props.modelValue)
+
+const updateValue = (value) => {
+  inputValue.value = value
+  emit('update:modelValue', value)
+}
+
+const computedState = computed(() => {
+  if (!props.isSubmitted) return null
+  if (props.required) {
+    if (props.type === 'date') {
+      return inputValue.value && !isNaN(Date.parse(inputValue.value))
+    }
+    return inputValue.value.length > 0
+  }
+  return true
+})
+
+const invalidFeedback = computed(() => {
+  if (!props.isSubmitted) return ''
+  if (props.required) {
+    if (props.type === 'date') {
+      if (!inputValue.value || isNaN(Date.parse(inputValue.value))) {
+        return 'Selecione uma data válida'
+      }
+    }
+    else if (inputValue.value.length === 0) {
+      return 'Por favor, digite ao menos duas palavras'
+    }
+  }
+  return ''
+})
+
+// const handleFileChange = (file: File) => {
+//   emit('update:modelValue', file)
+// }
 </script>
+
 
 <style scoped>
 .form-input-label {

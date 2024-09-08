@@ -58,7 +58,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
 import ProjectRemove from './ProjectRemove.vue'
 import defaultImage from '~/assets/images/image.png'
 import projectService from '~/services/projectService.ts'

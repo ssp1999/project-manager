@@ -14,7 +14,8 @@
       </nuxt-link>
     </div>
     <div v-else class="d-flex flex-wrap gap-3 justify-content-start">
-      <project-card v-for="project in projects" :key="project.id" :project="project" class="project-card" />
+      <project-card v-for="project in projects" :key="project.id" :project="project" class="project-card"
+        @update:favorite="updateFavorite" />
     </div>
   </div>
 </template>
@@ -64,6 +65,18 @@ const handleSortChanged = (order) => {
   sortOrder.value = order
   fetchProjects()
 }
+
+const updateFavorite = async (updatedProject) => {
+  try {
+    const index = projects.value.findIndex(p => p.id === updatedProject.id)
+    if (index !== -1) {
+      projects.value[index] = updatedProject
+    }
+  } catch (error) {
+    console.error('Error updating favorite status:', error)
+  }
+}
+
 </script>
 
 <style scoped lang="scss">

@@ -1,7 +1,25 @@
 {
   "projects": [
     {
-      "id": 1,
+      "id": "1",
+      "name": "Projeto 1",
+      "cliente": "Cliente 1",
+      "start_date": "2024-01-01",
+      "end_date": "2024-06-30",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": "2",
+      "name": "Projeto 2",
+      "cliente": "Cliente 2",
+      "start_date": "2024-02-01",
+      "end_date": "2024-07-31",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": "3",
       "name": "Alpha",
       "cliente": "Client A",
       "start_date": "2024-01-01",
@@ -10,7 +28,7 @@
       "favorite": true
     },
     {
-      "id": 2,
+      "id": "4",
       "name": "Beta",
       "cliente": "Client B",
       "start_date": "2024-03-01",
@@ -19,38 +37,20 @@
       "favorite": false
     },
     {
-      "id": 3,
-      "name": "Alpha",
-      "cliente": "Client A",
-      "start_date": "2024-01-01",
-      "end_date": "2024-06-30",
-      "image": "",
-      "favorite": true
-    },
-    {
-      "id": 4,
-      "name": "Beta",
-      "cliente": "Client B",
-      "start_date": "2024-03-01",
-      "end_date": "2024-09-30",
+      "id": "5",
+      "name": "Gamma",
+      "cliente": "Client C",
+      "start_date": "2024-04-01",
+      "end_date": "2024-10-31",
       "image": "",
       "favorite": false
     },
     {
-      "id": 5,
-      "name": "Beta",
-      "cliente": "Client B",
-      "start_date": "2024-03-01",
-      "end_date": "2024-09-30",
-      "image": "",
-      "favorite": false
-    },
-    {
-      "id": 6,
-      "name": "Beta",
-      "cliente": "Client B",
-      "start_date": "2024-03-01",
-      "end_date": "2024-09-30",
+      "id": "6",
+      "name": "Delta",
+      "cliente": "Client D",
+      "start_date": "2024-05-01",
+      "end_date": "2024-11-30",
       "image": "",
       "favorite": false
     }

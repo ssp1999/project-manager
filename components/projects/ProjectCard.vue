@@ -4,7 +4,7 @@
       <div class="project-card-image">
         <img :src="project.image || defaultImage" alt="Project Image">
         <div class="project-card-actions">
-          <b-button variant="primary" class="btn-transparent">
+          <b-button variant="primary" class="btn-transparent" @click="toggleFavorite">
             <i class="bi" :class="project.favorite ? 'bi-star-fill text-warning' : 'bi-star'"></i>
           </b-button>
           <client-only>
@@ -58,9 +58,10 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 import ProjectRemove from './ProjectRemove.vue'
 import defaultImage from '~/assets/images/image.png'
+import projectService from '~/services/projectService.ts'
 
 const props = defineProps({
   project: {
@@ -78,6 +79,8 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['update:favorite'])
+
 const formatDate = (dateString) => {
   if (!dateString) return ''
   const options = { year: 'numeric', month: 'long', day: 'numeric' }
@@ -85,6 +88,15 @@ const formatDate = (dateString) => {
 }
 
 const editLink = '/project-edit'
+
+const toggleFavorite = async () => {
+  try {
+    const updatedProject = await projectService.toggleFavorite(props.project.id, !props.project.favorite)
+    emit('update:favorite', updatedProject)
+  } catch (error) {
+    console.error('Error toggling favorite status:', error)
+  }
+}
 </script>
 
 <style scoped lang="scss">

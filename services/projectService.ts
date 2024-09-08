@@ -53,20 +53,45 @@ export default {
     try {
       const config = useRuntimeConfig()
       const apiBase = config.public.apiBase
-  
+
       const extendedFilters = {
         ...filters,
         name: query
       }
-  
-      console.log('Filters being sent:', extendedFilters);
-  
-      const projects = await this.getProjects(extendedFilters, sortOrder);
-  
-      return projects;
+
+      console.log('Filters being sent:', extendedFilters)
+
+      const projects = await this.getProjects(extendedFilters, sortOrder)
+
+      return projects
     } catch (error) {
-      console.error('Error searching projects:', error);
-      throw error;
+      console.error('Error searching projects:', error)
+      throw error
+    }
+  },
+
+  async toggleFavorite(id: number, favorite: boolean): Promise<Project> {
+    try {
+      const config = useRuntimeConfig()
+      const apiBase = config.public.apiBase
+
+      const response = await fetch(`${apiBase}/projects/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ favorite: favorite }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update favorite status')
+      }
+
+      const data = await response.json()
+      return data as Project
+    } catch (error) {
+      console.error('Error updating favorite status:', error)
+      throw error
     }
   },
 

@@ -1,0 +1,58 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "Project Alpha",
+      "cliente": "Client A",
+      "start_date": "2024-01-01",
+      "end_date": "2024-06-30",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": 2,
+      "name": "Project Beta",
+      "cliente": "Client B",
+      "start_date": "2024-03-01",
+      "end_date": "2024-09-30",
+      "image": "",
+      "favorite": false
+    },
+    {
+      "id": 3,
+      "name": "Project Alpha",
+      "cliente": "Client A",
+      "start_date": "2024-01-01",
+      "end_date": "2024-06-30",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": 4,
+      "name": "Project Beta",
+      "cliente": "Client B",
+      "start_date": "2024-03-01",
+      "end_date": "2024-09-30",
+      "image": "",
+      "favorite": false
+    },
+    {
+      "id": 5,
+      "name": "Project Beta",
+      "cliente": "Client B",
+      "start_date": "2024-03-01",
+      "end_date": "2024-09-30",
+      "image": "",
+      "favorite": false
+    },
+    {
+      "id": 6,
+      "name": "Project Beta",
+      "cliente": "Client B",
+      "start_date": "2024-03-01",
+      "end_date": "2024-09-30",
+      "image": "",
+      "favorite": false
+    }
+  ]
+}

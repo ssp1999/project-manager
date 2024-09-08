@@ -49,6 +49,27 @@ export default {
     }
   },
 
+  async searchProjects(query: string, filters?: ProjectFilters, sortOrder: SortOrder = 'alphabetical'): Promise<Project[]> {
+    try {
+      const config = useRuntimeConfig()
+      const apiBase = config.public.apiBase
+  
+      const extendedFilters = {
+        ...filters,
+        name: query
+      }
+  
+      console.log('Filters being sent:', extendedFilters);
+  
+      const projects = await this.getProjects(extendedFilters, sortOrder);
+  
+      return projects;
+    } catch (error) {
+      console.error('Error searching projects:', error);
+      throw error;
+    }
+  },
+
   async getProject(id: number): Promise<Project> {
     try {
       const config = useRuntimeConfig()

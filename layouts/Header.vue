@@ -12,14 +12,17 @@
     <b-button variant="secondary" class="btn-transparent" @click="hideSearch">
       <i class="bi bi-search text-primary icon-margin"></i>
     </b-button>
-    <b-input type="search" class="h-100 search-input" size="lg" placeholder="Digite o nome do projeto..."/>
+    <b-input type="search" class="h-100 search-input" size="lg" placeholder="Digite o nome do projeto..."
+      v-model="searchQuery" @input="handleSearch" />
   </b-navbar>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import projectService from '~/services/projectService.ts'
 
 const showSearch = ref(false)
+const searchQuery = ref('')
 
 function toggleSearch() {
   showSearch.value = true
@@ -27,7 +30,25 @@ function toggleSearch() {
 
 function hideSearch() {
   showSearch.value = false
+  searchQuery.value = ''
 }
+
+watch(searchQuery, (newQuery) => {
+  if (newQuery.length >= 3) {
+    handleSearch()
+  }
+})
+
+async function handleSearch() {
+  try {
+    console.log('Searching for projects with query:', searchQuery.value);
+    const projects = await projectService.searchProjects(searchQuery.value);
+    console.log('Search results:', projects);
+  } catch (error) {
+    console.error('Error searching projects:', error);
+  }
+}
+
 </script>
 
 <style lang="scss">

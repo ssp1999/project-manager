@@ -1,8 +1,8 @@
 <template>
   <b-card
-    class="form-input-file d-flex justify-content-center align-items-center text-center my-auto position-relative">
+    class="form-input-image d-flex justify-content-center align-items-center text-center my-auto position-relative">
     <input type="file" accept="image/png, image/jpeg" ref="fileInput" style="display: none"
-      @change="handleFileChange" />
+      @change="handleImageChange" />
     <template v-if="imageSrc">
       <div class="position-relative">
         <b-button pill size="sm" variant="outline-primary" class="bg-white position-absolute top-0 end-0 m-2"
@@ -34,7 +34,7 @@ const triggerFileInput = () => {
   fileInput.value.click()
 }
 
-const handleFileChange = (event) => {
+const handleImageChange = (event) => {
   const file = event.target.files[0]
   if (file) {
     const reader = new FileReader()
@@ -51,7 +51,7 @@ const removeImage = () => {
 </script>
 
 <style scoped>
-.form-input-file {
+.form-input-image {
   position: relative;
   width: 702px;
   height: 174px;

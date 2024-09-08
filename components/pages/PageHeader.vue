@@ -8,23 +8,34 @@
       <h1 class="page-title">{{ pageTitle }}</h1>
       <span class="counter" v-if="showCounter">({{ counter }})</span>
     </div>
-    <div class="d-flex gap-2 align-items-center" v-if="showFilters">
-      <b-form-checkbox v-model="onlyFavorites" switch @change="emitFilterChanged">Apenas Favoritos</b-form-checkbox>
-      <client-only>
-        <b-dropdown text="Ordenar por" variant="light">
-          <b-dropdown-item @click="emitSortChanged('alphabetical')">Ordem alfabética</b-dropdown-item>
-          <b-dropdown-divider />
-          <b-dropdown-item @click="emitSortChanged('start_date')">Iniciados mais recentes</b-dropdown-item>
-          <b-dropdown-divider />
-          <b-dropdown-item @click="emitSortChanged('end_date')">Prazo mais próximo</b-dropdown-item>
-        </b-dropdown>
-      </client-only>
+    <div class="d-flex gap-2" v-if="showFilters || showCreateButton">
+      <div class="d-flex gap-2 align-items-center" v-if="showFilters">
+        <b-form-checkbox v-model="onlyFavorites" switch @change="emitFilterChanged">Apenas Favoritos</b-form-checkbox>
+        <client-only>
+          <b-dropdown text="Ordenar por" variant="light">
+            <b-dropdown-item @click="emitSortChanged('alphabetical')">Ordem alfabética</b-dropdown-item>
+            <b-dropdown-divider />
+            <b-dropdown-item @click="emitSortChanged('start_date')">Iniciados mais recentes</b-dropdown-item>
+            <b-dropdown-divider />
+            <b-dropdown-item @click="emitSortChanged('end_date')">Prazo mais próximo</b-dropdown-item>
+          </b-dropdown>
+        </client-only>
+      </div>
+      <div v-if="showCreateButton">
+        <nuxt-link to="/project/create">
+          <b-button variant="primary" pill>
+            <div class="d-flex gap-1">
+              Criar novo projeto
+            </div>
+          </b-button>
+        </nuxt-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   pageTitle: {
@@ -44,6 +55,10 @@ const props = defineProps({
     default: false
   },
   showFilters: {
+    type: Boolean,
+    default: false
+  },
+  showCreateButton: {
     type: Boolean,
     default: false
   }

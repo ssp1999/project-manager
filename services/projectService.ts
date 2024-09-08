@@ -1,12 +1,4 @@
-interface Project {
-  id?: number
-  name: string
-  client: string
-  start_date: string
-  end_date: string
-  image?: string
-  favorite?: boolean
-}
+import type { Project } from '~/types/project.d.ts'
 
 interface ProjectFilters {
   favorite?: boolean

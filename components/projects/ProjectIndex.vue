@@ -1,10 +1,10 @@
 <template>
   <div class="m-5">
     <page-header pageTitle="Projetos" :returnLink="false" :showCounter="true" :counter="projects.length"
-      :showFilters="true" @filter-changed="handleFilterChanged" @sort-changed="handleSortChanged" />
+      :showFilters="true" :showCreateButton="true" @filter-changed="handleFilterChanged" @sort-changed="handleSortChanged" />
     <div v-if="projects.length === 0" class="text-center mt-4">
       <p>Não há projetos disponíveis.</p>
-      <nuxt-link to="/project-create">
+      <nuxt-link to="/project/create">
         <b-button variant="primary" pill>
           <div class="d-flex gap-1">
             <i class="bi bi-plus"></i>
@@ -54,7 +54,6 @@ const fetchProjects = async () => {
   }
 }
 
-onMounted(fetchProjects)
 
 const handleFilterChanged = ({ favorite }) => {
   filterFavorites.value = favorite
@@ -76,6 +75,10 @@ const updateFavorite = async (updatedProject) => {
     console.error('Error updating favorite status:', error)
   }
 }
+
+onMounted(() => {
+  fetchProjects()
+})
 
 </script>
 

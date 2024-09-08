@@ -14,7 +14,7 @@
                   <i class="bi bi-three-dots"></i>
                 </b-button>
               </template>
-              <nuxt-link :to="editLink" class="text-decoration-none">
+              <nuxt-link :to="`/project/${project.id}`" class="text-decoration-none">
                 <b-dropdown-item>
                   <div class="d-flex gap-2">
                     <i class="bi bi-pencil-square"></i>
@@ -40,7 +40,7 @@
       <h5 class="project-card-title">{{ project.name }}</h5>
       <p class="project-card-text">
         <b>Cliente:</b>
-        {{ project.cliente }}
+        {{ project.client }}
       </p>
     </template>
 
@@ -69,7 +69,7 @@ const props = defineProps({
     default: () => ({
       id: undefined,
       name: '',
-      cliente: '',
+      client: '',
       start_date: '',
       end_date: '',
       image: '',
@@ -85,8 +85,6 @@ const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' }
   return new Date(dateString).toLocaleDateString('pt-BR', options)
 }
-
-const editLink = '/project-edit'
 
 const toggleFavorite = async () => {
   try {

@@ -8,19 +8,19 @@
           <span class="form-input-required ms-1" v-if="required">(Obrigatório)</span>
         </div>
       </template>
-      <template v-if="type === 'file'">
-        <form-input-file />
+      <template v-if="type === 'image'">
+        <form-input-image />
       </template>
       
-      <b-form-input v-else :id="id" v-model="inputValue" trim :type="type" :state="computedState"
-        @input="updateValue" />
+      <b-form-input v-else :id="id" v-model="model" trim :type="type" :state="computedState" />
     </b-form-group>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
-import FormInputFile from './FormInputFile.vue'
+import FormInputImage from './FormInputImage.vue'
+import { validateForm } from '~/helpers/form'
 
 const props = defineProps({
   id: {
@@ -47,50 +47,31 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  modelValue: {
-    type: String,
-    default: ''
-  }
 })
 
-const emit = defineEmits(['update:modelValue'])
-
-const inputValue = ref(props.modelValue)
-
-const updateValue = (value) => {
-  inputValue.value = value
-  emit('update:modelValue', value)
-}
+const model = defineModel()
 
 const computedState = computed(() => {
   if (!props.isSubmitted) return null
   if (props.required) {
-    if (props.type === 'date') {
-      return inputValue.value && !isNaN(Date.parse(inputValue.value))
-    }
-    return inputValue.value.length > 0
+    return validateForm(model.value, props.type)
   }
   return true
 })
 
 const invalidFeedback = computed(() => {
   if (!props.isSubmitted) return ''
-  if (props.required) {
+  if (props.required && !validateForm(model.value, props.type)) {
     if (props.type === 'date') {
-      if (!inputValue.value || isNaN(Date.parse(inputValue.value))) {
-        return 'Selecione uma data válida'
-      }
+      return 'Selecione uma data válida'
     }
-    else if (inputValue.value.length === 0) {
+
+    if (model.value.length === 0) {
       return 'Por favor, digite ao menos duas palavras'
     }
   }
   return ''
 })
-
-// const handleFileChange = (file: File) => {
-//   emit('update:modelValue', file)
-// }
 </script>
 
 
@@ -105,7 +86,7 @@ const invalidFeedback = computed(() => {
   font-size: 14px;
 }
 
-.form-input-file {
+.form-input-image {
   background-color: #F4F2FF;
   color: #717171;
   font-size: 16px;

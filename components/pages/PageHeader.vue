@@ -9,14 +9,14 @@
       <span class="counter" v-if="showCounter">({{ counter }})</span>
     </div>
     <div class="d-flex gap-2 align-items-center" v-if="showFilters">
-      <b-form-checkbox switch>Apenas Favoritos</b-form-checkbox>
+      <b-form-checkbox v-model="onlyFavorites" switch @change="emitFilterChanged">Apenas Favoritos</b-form-checkbox>
       <client-only>
-        <b-dropdown text="Ordem alfabética" variant="light">
-          <b-dropdown-item>Ordem alfabética</b-dropdown-item>
+        <b-dropdown text="Ordenar por" variant="light">
+          <b-dropdown-item @click="emitSortChanged('alphabetical')">Ordem alfabética</b-dropdown-item>
           <b-dropdown-divider />
-          <b-dropdown-item>Iniciados mais recentes</b-dropdown-item>
+          <b-dropdown-item @click="emitSortChanged('start_date')">Iniciados mais recentes</b-dropdown-item>
           <b-dropdown-divider />
-          <b-dropdown-item>Prazo mais próximo</b-dropdown-item>
+          <b-dropdown-item @click="emitSortChanged('end_date')">Prazo mais próximo</b-dropdown-item>
         </b-dropdown>
       </client-only>
     </div>
@@ -24,7 +24,9 @@
 </template>
 
 <script setup>
-defineProps({
+import { ref, defineEmits } from 'vue'
+
+const props = defineProps({
   pageTitle: {
     type: String,
     default: 'create'
@@ -46,6 +48,17 @@ defineProps({
     default: false
   }
 })
+
+const emit = defineEmits(['filter-changed', 'sort-changed'])
+const onlyFavorites = ref(false)
+
+const emitFilterChanged = () => {
+  emit('filter-changed', { favorite: onlyFavorites.value })
+}
+
+const emitSortChanged = (order) => {
+  emit('sort-changed', order)
+}
 </script>
 
 <style scoped>

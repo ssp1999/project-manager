@@ -8,13 +8,35 @@ interface Project {
   favorite?: boolean
 }
 
+interface ProjectFilters {
+  favorite?: boolean
+}
+
+type SortOrder = 'alphabetical' | 'start_date' | 'end_date'
+
 export default {
-  async getProjects(): Promise<Project[]> {
+  async getProjects(filters?: ProjectFilters, sortOrder: SortOrder = 'alphabetical'): Promise<Project[]> {
     try {
       const config = useRuntimeConfig()
       const apiBase = config.public.apiBase
 
-      const response = await fetch(`${apiBase}/projects`)
+      const queryParams = new URLSearchParams(filters as any).toString()
+      let url = `${apiBase}/projects${queryParams ? `?${queryParams}` : ''}`
+
+      switch (sortOrder) {
+        case 'start_date':
+          url += `${queryParams ? '&' : '?'}sort=start_date`
+          break
+        case 'end_date':
+          url += `${queryParams ? '&' : '?'}sort=end_date`
+          break
+        case 'alphabetical':
+        default:
+          url += `${queryParams ? '&' : '?'}sort=name`
+          break
+      }
+
+      const response = await fetch(url)
       if (!response.ok) {
         throw new Error('Failed to fetch projects')
       }

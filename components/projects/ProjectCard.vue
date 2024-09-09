@@ -34,7 +34,7 @@
     </template>
 
     <template #header>
-      <h5 class="project-card-title">{{ project.name }}</h5>
+      <h5 class="project-card-title" v-html="highlightedName"></h5>
       <p class="project-card-client">
         <b>Cliente:</b>
         <span class="project-card-client-text">{{ project.client }}</span>
@@ -62,7 +62,7 @@ import defaultImage from '~/assets/images/project-card-placeholder.png'
 import { useProjectsStore } from '~/stores/projects'
 import { useModalProjectRemove } from '~/stores/modalProjectRemove'
 const projectsStore = useProjectsStore()
-const modalProjectRemoveStore = useModalProjectRemove();
+const modalProjectRemoveStore = useModalProjectRemove()
 
 const props = defineProps({
   project: {
@@ -99,7 +99,7 @@ const toggleFavorite = async () => {
     }
 
     await projectsStore.updateProject(props.project.id, updatedProject)
-    await projectsStore.fetchProjects();
+    await projectsStore.fetchProjects()
   } catch (error) {
     console.error('Error toggling favorite status:', error)
   }
@@ -112,6 +112,24 @@ const openModalProjectRemove = () => {
 
   modalProjectRemoveStore.setShowModal(true)
 }
+
+const searchQuery = computed({
+  get: () => projectsStore.filters.search_query,
+  set: (value) => projectsStore.setFilters('search_query', value)
+})
+
+const highlightedName = computed(() => {
+  const query = searchQuery.value.toLowerCase()
+  const name = props.project.name.toLowerCase()
+
+  if (!query || !name.includes(query)) {
+    return props.project.name
+  }
+
+  const parts = name.split(new RegExp(`(${query})`, 'gi'))
+  return parts.map(part => (part.toLowerCase() === query ? `<span class="highlight">${part}</span>` : part)).join('')
+})
+
 </script>
 
 <style lang="scss">
@@ -148,6 +166,7 @@ const openModalProjectRemove = () => {
 
   .project-card-actions-favorite {
     padding: .3125rem .3125rem;
+
     i {
       display: flex;
       font-size: 1.125rem;
@@ -262,5 +281,9 @@ const openModalProjectRemove = () => {
     font-weight: 400;
     line-height: normal;
   }
+}
+
+.highlight {
+  background-color: yellow;
 }
 </style>

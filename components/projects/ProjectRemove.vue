@@ -32,6 +32,10 @@ const project = ref({})
 const showModal = ref(false);
 const { show: showToast } = useToast()
 
+const emit = defineEmits([
+  'removedProject'
+])
+
 const closeModal = () => {
   showModal.value = false
 }
@@ -47,6 +51,8 @@ const confirmRemove = async () => {
       },
     })
     closeModal()
+
+    emit('removedProject')
   } catch (error) {
     showToast?.({
       props: {

@@ -18,7 +18,7 @@
         @update:favorite="updateFavorite" @openModalProjectRemove="openModalProjectRemove($event)"/>
     </div>
   </div>
-  <project-remove ref="project-remove"/>
+  <project-remove ref="project-remove" @removedProject="removedProject"/>
 </template>
 
 <script setup>
@@ -81,6 +81,10 @@ const updateFavorite = async (updatedProject) => {
 
 const openModalProjectRemove = (modalData) => {
   projectRemoveRef.value.openModal(modalData)
+}
+
+const removedProject = () => {
+  fetchProjects()
 }
 
 onMounted(() => {

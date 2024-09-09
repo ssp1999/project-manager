@@ -2,8 +2,8 @@
   <div class="m-5">
     <page-header :pageTitle="formTitle" />
 
-    <b-card class="card-form d-flex justify-content-center align-items-center">
-      <b-form class="my-5 px-4 min-form-width" @submit.prevent="handleSubmit" novalidate>
+    <b-card class="project-form-card d-flex justify-content-center align-items-center">
+      <b-form class="project-form" @submit.prevent="handleSubmit" novalidate>
         <form-input label="Nome do projeto" id="project-name" v-model="formFields.name.value" :type="formFields.name.type" :required="formFields.name.required"
           :isSubmitted="isSubmitted" />
         <form-input label="Cliente" id="client" v-model="formFields.client.value" :required="formFields.client.required" :type="formFields.client.type" :isSubmitted="isSubmitted" />
@@ -172,40 +172,24 @@ const handleSubmit = async () => {
   }
 }
 
-// const handleFileUpload = (event: Event) => {
-//   const file = (event.target as HTMLInputElement).files?.[0]
-//   if (file) {
-//     project.value.image = file
-//   }
-// }
-
-// const convertImageToBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader()
-//     reader.onloadend = () => resolve(reader.result)
-//     reader.onerror = reject
-//     reader.readAsDataURL(file)
-//   })
-// }
-
 onMounted(() => {
   getProject()
 })
 </script>
 
-<style scoped>
-.card-form {
-  background-color: #F4F2FF;
-}
+<style lang="scss">
+.project-form-card {
+  background-color: transparent;
 
-.min-form-width {
-  min-width: 702px;
-  width: 100%;
-}
+  .card-body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
-@media (max-width: 768px) {
-  .min-form-width {
-    min-width: 100%;
+    .project-form {
+      max-width: 704px;
+      width: 100%;
+    }
   }
 }
 </style>

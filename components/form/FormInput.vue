@@ -9,7 +9,7 @@
         </div>
       </template>
       <template v-if="type === 'image'">
-        <form-input-image />
+        <form-input-image v-model="model"/>
       </template>
       
       <b-form-input v-else :id="id" v-model="model" trim :type="type" :state="computedState" />

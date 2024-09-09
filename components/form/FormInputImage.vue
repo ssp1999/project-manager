@@ -1,10 +1,9 @@
 <template>
-  <b-card
-    class="form-input-image d-flex justify-content-center align-items-center text-center my-auto position-relative">
-    <input type="file" accept="image/png, image/jpeg" ref="fileInput" style="display: none"
+  <b-card class="form-input-image-card" :class="{ 'form-input-has-image': imageSrc !== '' }">
+    <input type="file" accept="image/png, image/jpg, image/jpeg" ref="fileInput" style="display: none"
       @change="handleImageChange" />
     <template v-if="imageSrc">
-      <div class="position-relative">
+      <div>
         <b-button pill size="sm" variant="outline-primary" class="bg-white position-absolute top-0 end-0 m-2"
           @click="removeImage" aria-label="Remover imagem">
           <i class="bi bi-trash3"></i>
@@ -14,9 +13,10 @@
     </template>
     <template v-else>
       <div class="placeholder-content">
-        <i class="bi bi-upload icon"></i>
-        <p>Escolha uma imagem .jpg ou .png no seu dispositivo</p>
-        <b-button pill variant="outline-primary" class="bg-white" @click="triggerFileInput">
+        <i class="bi bi-upload icon placeholder-upload-icon"></i>
+        <p class="placeholder-text">Escolha uma imagem .jpg ou .png no seu dispositivo</p>
+        <b-button pill variant="outline-primary" class="bg-white placeholder-button-select-image"
+          @click="triggerFileInput">
           Selecionar
         </b-button>
       </div>
@@ -25,7 +25,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+const emit = defineEmits(['update:modelValue'])
+const model = defineModel()
 
 const fileInput = ref(null)
 const imageSrc = ref('')
@@ -48,34 +50,76 @@ const handleImageChange = (event) => {
 const removeImage = () => {
   imageSrc.value = ''
 }
+
+watch(
+  () => imageSrc.value,
+  (newValue) => {
+    if (model.value !== newValue) {
+      emit('update:modelValue', newValue) 
+    }
+  }
+);
+
+watchEffect(() => {
+  imageSrc.value = model.value
+})
 </script>
 
-<style scoped>
-.form-input-image {
+<style lang="scss">
+.form-input-image-card {
   position: relative;
-  width: 702px;
-  height: 174px;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-}
+  background-color: transparent;
+  border: 1px dashed #717171;
 
-.image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+  .card-body {
+    padding: unset;
+    height: 100%;
+    width: 100%;
+  }
 
-.card-image {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  min-width: 702px;
-  min-height: 395px;
-}
+  .placeholder-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 21px 0px;
 
-.placeholder-content {
-  text-align: center;
+    .placeholder-upload-icon {
+      display: flex;
+      font-size: 24px;
+      color: #717171;
+    }
+
+    .placeholder-text {
+      color: #717171;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+      margin-block: 16px 24px;
+    }
+
+    .placeholder-button-select-image {
+      max-width: 144px;
+      color: #695CCD;
+      padding: 9px 32px;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &.form-input-has-image {
+    border-style: solid;
+    padding: 0;
+    border-color: #dee2e6;
+  }
 }
 </style>

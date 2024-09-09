@@ -194,17 +194,17 @@ onMounted(() => {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 52px 48px;
+    padding: 3.25rem 3rem;
 
     .project-form {
-      max-width: 704px;
+      max-width: 44rem;
       width: 100%;
     }
   }
 
   .project-form-group-wrapper {
-    margin-bottom: 32px;
-    padding-inline: 24px;
+    margin-bottom: 2rem;
+    padding-inline: 1.5rem;
   }
 }
 </style>

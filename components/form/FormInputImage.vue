@@ -90,29 +90,29 @@ watchEffect(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 21px 0px;
+    padding: 1.3125rem 0;
 
     .placeholder-upload-icon {
       display: flex;
-      font-size: 24px;
+      font-size: 1.5rem;
       color: #717171;
     }
 
     .placeholder-text {
       color: #717171;
       text-align: center;
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 400;
-      line-height: 22px;
-      margin-block: 16px 24px;
+      line-height: 1.375rem;
+      margin-block: 1rem 1.5rem;
     }
 
     .placeholder-button-select-image {
-      max-width: 144px;
+      max-width: 9rem;
       color: #695CCD;
-      padding: 9px 32px;
-      font-size: 16px;
-      line-height: 24px;
+      padding: .5625rem 2rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
     }
   }
 

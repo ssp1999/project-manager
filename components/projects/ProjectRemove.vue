@@ -84,12 +84,12 @@ const confirmRemove = async () => {
 <style lang="scss">
 .modal-project-remove {
   .modal-content {
-    min-width: 582px;
-    padding: 32px;
+    max-width: 36.375rem;
+    padding: 2rem;
   }
 
   .modal-header {
-    min-height: 72px;
+    min-height: 4.5rem;
     display: flex;
     align-items: center;
     padding: unset;
@@ -103,7 +103,7 @@ const confirmRemove = async () => {
   }
 
   .modal-body-container {
-    padding-block: 32px;
+    padding-block: 2rem;
   }
 
   .modal-hr-separator {
@@ -114,25 +114,25 @@ const confirmRemove = async () => {
 
   .modal-title {
     color: #1F1283;
-    font-size: 22px;
+    font-size: 1.375rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 32px;
+    line-height: 2rem;
   }
 
   .modal-text {
     color: #717171;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 22px;
-    margin-bottom: 13px;
+    line-height: 1.375rem;
+    margin-bottom: .8125rem;
   }
 
   .modal-project-name {
     color: #1C1930;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 500;
-    line-height: 32px;
+    line-height: 2rem;
     margin-bottom: unset;
   }
 
@@ -142,36 +142,36 @@ const confirmRemove = async () => {
   }
 
   .modal-button {
-    min-height: 52px;
+    min-height: 3.25rem;
     width: 100%;
   }
 
   .modal-button-cancel {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 1.375rem;
   }
 
   .modal-button-confirm {
     color: #FFF;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 1.375rem;
   }
 
   .modal-icon-container {
     position: absolute;
-    width: 64px;
-    height: 64px;
+    width: 4rem;
+    height: 4rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: -32px;
+    top: -2rem;
   }
 
   .modal-icon {
-    width: 64px;
-    height: 64px;
+    width: 4rem;
+    height: 4rem;
     background: #695CCD;
     border-radius: 50%;
     display: flex;

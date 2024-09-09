@@ -2,7 +2,7 @@
   <b-navbar class="header" :class="{ 'header-search-mode': showSearchInput }">
     <template v-if="!showSearchInput">
       <div class="d-flex justify-content-center align-items-center w-100">
-        <img src="~/assets/images/symbol.png" class="text-white" alt="logo">
+        <img src="~/assets/images/symbol.png" class="text-white header-logo" alt="logo">
         <span class="text-white mx-3 title">Gerenciador<br> de Projetos</span>
       </div>
       <template v-if="showSearchButton">
@@ -66,32 +66,36 @@ function toggleSearchInput(search) {
 
 <style lang="scss">
 .header {
-  min-height: 72px;
+  min-height: 4.5rem;
   background-color: #1C1930;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 4px 52px;
+  box-shadow: 0px .25rem .25rem 0px rgba(0, 0, 0, 0.25);
+  padding: .25rem 3.25rem;
 
   .container-fluid {
     padding: unset;
+  }
 
+  .header-logo {
+    height: 4.5rem;
+    width: 4.5rem;
   }
 
   .title {
     color: #FFF;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 400;
     line-height: normal;
   }
 
   .icon-search {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 
   &.header-search-mode {
     background-color: #FFF;
 
     .search-input {
-      min-height: 72px;
+      min-height: 4.5rem;
       border: none;
       outline: none;
 

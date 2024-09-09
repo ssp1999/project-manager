@@ -7,12 +7,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
 </script>
 
 <style scoped>
 .body {
-  margin: 60px 42px;
+  margin: 3.75rem 2.625rem;
 }
 </style>

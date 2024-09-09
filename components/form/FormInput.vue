@@ -78,22 +78,21 @@ const invalidFeedback = computed(() => {
 <style scoped>
 .form-input-label {
   color: #695CCD;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .form-input-required {
   color: #717171;
-  font-size: 14px;
+  font-size: .875rem;
 }
 
 .form-input-image {
   background-color: #F4F2FF;
   color: #717171;
-  font-size: 16px;
-  /* min-height: 174px; */
+  font-size: 1rem;
 
   .icon {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 }
 </style>

@@ -43,33 +43,33 @@ onMounted(() => {
 <style scoped lang="scss">
 .project-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(346px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(430px, 1fr));
-  grid-gap: 32px;
+  grid-template-columns: repeat(auto-fit, 1fr);
+  grid-template-rows: repeat(auto-fill, minmax(26.875rem, 1fr));
+  grid-gap: 2rem;
   grid-auto-columns: 2 !important;
 
-  @media (min-width: 808px) {
-    grid-template-columns: repeat(2, minmax(346px, 1fr));
+  @media (min-width: 50.5rem) {
+    grid-template-columns: repeat(2, minmax(21.625rem, 1fr));
   }
 
-  @media (min-width: 1186px) {
-    grid-template-columns: repeat(3, minmax(346px, 1fr));
+  @media (min-width: 74.125rem) {
+    grid-template-columns: repeat(3, minmax(21.625rem, 1fr));
   }
 
-  @media (min-width: 1564px) {
-    grid-template-columns: repeat(4, minmax(346px, 1fr));
+  @media (min-width: 97.75rem) {
+    grid-template-columns: repeat(4, minmax(21.625rem, 1fr));
   }
 
-  @media (min-width: 1942px) {
-    grid-template-columns: repeat(5, minmax(346px, 1fr));
+  @media (min-width: 121.375rem) {
+    grid-template-columns: repeat(5, minmax(21.625rem, 1fr));
   }
 
-  @media (min-width: 2320px) {
-    grid-template-columns: repeat(6, minmax(346px, 1fr));
+  @media (min-width: 145rem) {
+    grid-template-columns: repeat(6, minmax(21.625rem, 1fr));
   }
 
-  @media (min-width: 2698px) {
-    grid-template-columns: repeat(7, minmax(346px, 1fr));
+  @media (min-width: 168.625rem) {
+    grid-template-columns: repeat(7, minmax(21.625rem, 1fr));
   }
 }
 </style>

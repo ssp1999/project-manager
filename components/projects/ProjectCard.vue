@@ -14,7 +14,7 @@
               </template>
               <nuxt-link :to="`/project/${project.id}`" class="text-decoration-none">
                 <b-dropdown-item>
-                  <div class="d-flex align-items-center" style="gap: 12px">
+                  <div class="d-flex align-items-center" style="gap: .75rem">
                     <i class="bi bi-pencil-square dropdown-icon"></i>
                     <span class="dropdown-text">Editar</span>
                   </div>
@@ -141,15 +141,15 @@ const openModalProjectRemove = () => {
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 16px;
-    gap: 12px;
+    padding: 1rem;
+    gap: .75rem;
   }
 
   .project-card-actions-favorite {
-    padding: 5px 5px;
+    padding: .3125rem .3125rem;
     i {
       display: flex;
-      font-size: 18px;
+      font-size: 1.125rem;
     }
   }
 
@@ -158,17 +158,17 @@ const openModalProjectRemove = () => {
     padding: unset;
     border-radius: 8px;
     border-color: transparent;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px .25rem .25rem 0px rgba(0, 0, 0, 0.25);
 
     li {
 
       button {
-        padding: 14px 20px;
+        padding: .875rem 1.25rem;
         color: #1C1930;
         font-feature-settings: 'liga' off, 'clig' off;
-        font-size: 16px;
+        font-size: 1rem;
         font-weight: 400;
-        line-height: 16px;
+        line-height: 1rem;
       }
 
       .dropdown-divider {
@@ -179,13 +179,13 @@ const openModalProjectRemove = () => {
 
       .dropdown-icon {
         display: flex;
-        font-size: 24px;
+        font-size: 1.5rem;
         color: $primary;
       }
 
       .dropdown-text {
         color: $primary;
-        font-size: 16px;
+        font-size: 1rem;
         font-weight: 400;
         line-height: 1;
       }
@@ -196,52 +196,52 @@ const openModalProjectRemove = () => {
     .btn {
       background-color: #fff;
       border-radius: 100%;
-      padding: 5px 5px;
+      padding: .3125rem .3125rem;
 
       i {
         display: flex;
         color: $primary;
-        font-size: 22px;
+        font-size: 1.375rem;
       }
     }
   }
 
   .project-card-title {
     color: #1F1283;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 700;
     line-height: normal;
   }
 
   .project-card-client {
     color: #717171;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 700;
     line-height: normal;
     margin-bottom: unset;
 
     .project-card-client-text {
-      margin-left: 6px;
+      margin-left: .375rem;
       color: #717171;
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 400;
       line-height: normal;
     }
   }
 
   .card-header {
-    padding-block: 16px 24px;
+    padding-block: 1rem 1.5rem;
     border-bottom: unset;
     background-color: #fff;
   }
 
   .card-body {
     padding-block: unset;
-    padding-inline: 24px;
+    padding-inline: 1.5rem;
   }
 
   .project-body-container {
-    padding-block: 16px;
+    padding-block: 1rem;
   }
 
   .hr-separator {
@@ -251,13 +251,13 @@ const openModalProjectRemove = () => {
   }
 
   .project-card-date-icon {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   .project-card-date-text {
-    margin-left: 16px;
+    margin-left: 1rem;
     color: #717171;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     line-height: normal;
   }

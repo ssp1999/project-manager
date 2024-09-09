@@ -4,13 +4,13 @@
       <i class="bi bi-arrow-left"></i>
       <span class="px-2">Voltar</span>
     </nuxt-link>
-    <div class="d-flex justify-content-between align-items-center w-100">
+    <div class="page-header-content d-flex justify-content-between align-items-center w-100">
       <div class="d-flex align-items-center">
         <h1 class="page-title">{{ pageTitle }}</h1>
         <span class="counter" v-if="showCounter">({{ counter }})</span>
       </div>
-      <div class="d-flex gap-3" v-if="showFilters || showCreateButton">
-        <div class="d-flex gap-4 align-items-center" v-if="showFilters">
+      <div class="page-header-action-filters d-flex gap-3" v-if="showFilters || showCreateButton">
+        <div class="page-header-filters d-flex align-items-center" v-if="showFilters">
           <b-form-checkbox v-model="favoritesOnly" switch class="toggle-favorites">Apenas Favoritos</b-form-checkbox>
           <client-only>
             <b-dropdown v-model="showOrderByOptions" variant="light" class="select-order-by" no-caret>
@@ -29,8 +29,9 @@
         </div>
         <div v-if="showCreateButton">
           <nuxt-link to="/project/create">
-            <b-button variant="primary" pill class="px-4">
-              Criar novo projeto
+            <b-button variant="primary" pill class="page-header-button-create">
+              <i class="bi bi-plus"></i>
+              <span class="page-header-button-create-text">Criar novo projeto</span>
             </b-button>
           </nuxt-link>
         </div>
@@ -133,24 +134,36 @@ const selectedOrderByOptionText = computed(() => {
 
 <style scoped lang="scss">
 .page-header {
-  margin-bottom: 22px;
+  margin-bottom: 1.375rem;
 }
 
 .page-title {
   color: #1F1283;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
   line-height: normal;
   margin-bottom: unset;
 }
 
 .counter {
-  margin-left: 6px;
+  margin-left: .375rem;
   color: #695CCD;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.page-header-action-filters {
+  .page-header-filters {
+    gap: 1.5rem;
+  }
+
+  .page-header-button-create {
+    i {
+      font-size: 1.125rem;
+    }
+  }
 }
 </style>
 <style lang="scss">
@@ -160,8 +173,8 @@ const selectedOrderByOptionText = computed(() => {
 
   .form-check-input {
     margin: unset;
-    width: 48px;
-    height: 24px;
+    width: 3rem;
+    height: 1.5rem;
 
     &:checked {
       background-color: #FFB23D;
@@ -175,15 +188,15 @@ const selectedOrderByOptionText = computed(() => {
 
   .form-check-label {
     color: #1E1E1E;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 22px;
-    margin-left: 8px;
+    line-height: 1.375rem;
+    margin-left: .5rem;
   }
 }
 
 .select-order-by {
-  min-width: 296px;
+  min-width: 18.5rem;
 
   .btn {
     width: 100%;
@@ -192,10 +205,10 @@ const selectedOrderByOptionText = computed(() => {
     border-radius: 8px;
     color: #1C1930;
     font-feature-settings: 'liga' off, 'clig' off;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 18px;
-    padding: 10px 14px;
+    line-height: 1.125rem;
+    padding: .625rem .875rem;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -205,6 +218,7 @@ const selectedOrderByOptionText = computed(() => {
     }
 
     &.show {
+      border-color: $primary;
       background-color: #fff;
       border-bottom-left-radius: unset;
       border-bottom-right-radius: unset;
@@ -223,12 +237,12 @@ const selectedOrderByOptionText = computed(() => {
 
     li {
       button {
-        padding: 18px 16px;
+        padding: 1.125rem 1rem;
         color: #1C1930;
         font-feature-settings: 'liga' off, 'clig' off;
-        font-size: 16px;
+        font-size: 1rem;
         font-weight: 400;
-        line-height: 16px;
+        line-height: 1rem;
       }
 
       .dropdown-divider {
@@ -237,6 +251,46 @@ const selectedOrderByOptionText = computed(() => {
         opacity: 1;
       }
     }
+  }
+}
+
+@media (min-width: 64.0625rem) {
+  .page-header-action-filters {
+    .page-header-button-create {
+      i {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 64rem) {
+  .page-header-action-filters {
+    .page-header-filters {
+      gap: .75rem !important;
+    }
+
+    .page-header-button-create {
+      .page-header-button-create-text {
+        display:none;
+      }
+    }
+  }
+  
+  .select-order-by {
+    min-width: 14.0625rem;
+  }
+
+  .toggle-favorites {
+    .form-check-label {
+      display: none;
+    }
+  }
+}
+
+@media(max-width: 39rem) {
+  .page-header-content {
+    flex-direction: column;
   }
 }
 </style>

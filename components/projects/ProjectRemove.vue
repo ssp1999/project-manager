@@ -1,6 +1,7 @@
 <template>
   <template v-if="showModal">
-    <b-modal ref="modalProjectRemove" id="modal-project-remove" centered class="text-center modal-project-remove" :model-value="showModal">
+    <b-modal ref="modalProjectRemove" id="modal-project-remove" centered class="text-center modal-project-remove"
+      :model-value="showModal">
       <template #header>
         <div class="modal-icon-container">
           <i class="bi bi-trash3 modal-icon"></i>
@@ -16,33 +17,47 @@
       </template>
       <template #footer>
         <div class="modal-footer-buttons d-flex justify-content-center gap-2">
-          <b-button pill variant="outline-primary" class="modal-button modal-button-cancel" @click="closeModal">Cancelar</b-button>
-          <b-button pill variant="primary" class="modal-button modal-button-confirm" @click="confirmRemove">Confirmar</b-button>
+          <b-button pill variant="outline-primary" class="modal-button modal-button-cancel"
+            @click="closeModal">Cancelar</b-button>
+          <b-button pill variant="primary" class="modal-button modal-button-confirm"
+            @click="confirmRemove">Confirmar</b-button>
         </div>
       </template>
     </b-modal>
   </template>
 </template>
 
-<script setup>
-import projectService from '~/services/projectService.ts'
-import { ref } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useProjectsStore } from '~/stores/projects'
+import { useModalProjectRemove } from '~/stores/modalProjectRemove'
+import type { Project } from '~/types/project'
 
-const project = ref({})
-const showModal = ref(false);
+const modalProjectRemoveStore = useModalProjectRemove()
+const project = computed(() => modalProjectRemoveStore.modalData.project as Project)
 const { show: showToast } = useToast()
+const projectsStore = useProjectsStore()
 
-const emit = defineEmits([
-  'removedProject'
-])
+const showModal = computed({
+  get: () => modalProjectRemoveStore.showModal,
+  set: (value) => modalProjectRemoveStore.setShowModal(value)
+})
 
-const closeModal = () => {
+const closeModal = async () => {
   showModal.value = false
+
+  await projectsStore.fetchProjects()
 }
 
 const confirmRemove = async () => {
   try {
-    await projectService.deleteProject(project.value.id)
+    if (!('id' in project.value)) {
+      return
+    }
+    if (project.value?.id === undefined) {
+    }
+
+    await projectsStore.removeProject(project.value.id as string)
 
     showToast?.({
       props: {
@@ -51,8 +66,6 @@ const confirmRemove = async () => {
       },
     })
     closeModal()
-
-    emit('removedProject')
   } catch (error) {
     showToast?.({
       props: {
@@ -65,15 +78,6 @@ const confirmRemove = async () => {
   }
 }
 
-const openModal = (modalData) => {
-  project.value = modalData.project
-
-  showModal.value = true
-}
-
-defineExpose({
-  openModal
-})
 </script>
 
 
@@ -93,7 +97,7 @@ defineExpose({
     justify-content: center;
     border-bottom: unset;
   }
-  
+
   .modal-body {
     padding: unset;
   }
@@ -162,7 +166,7 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
-    top: -32px; 
+    top: -32px;
   }
 
   .modal-icon {

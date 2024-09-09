@@ -58,7 +58,10 @@
 
 <script setup>
 import defaultImage from '~/assets/images/image.png'
-import projectService from '~/services/projectService.ts'
+import { useProjectsStore } from '~/stores/projects'
+import { useModalProjectRemove } from '~/stores/modalProjectRemove'
+const projectsStore = useProjectsStore()
+const modalProjectRemoveStore = useModalProjectRemove();
 
 const props = defineProps({
   project: {
@@ -77,10 +80,6 @@ const props = defineProps({
 
 })
 
-const emit = defineEmits([
-  'update:favorite', 'openModalProjectRemove'
-])
-
 const formatDate = (dateString) => {
   if (!dateString) return ''
   const options = {
@@ -94,25 +93,23 @@ const formatDate = (dateString) => {
 
 const toggleFavorite = async () => {
   try {
-    const updatedProject = await projectService.toggleFavorite(props.project.id, !props.project.favorite)
-    emit('update:favorite', updatedProject)
+    const updatedProject = {
+      favorite: !props.project.favorite
+    }
+
+    await projectsStore.updateProject(props.project.id, updatedProject)
+    await projectsStore.fetchProjects();
   } catch (error) {
     console.error('Error toggling favorite status:', error)
   }
 }
 
-const removeProject = async (projectId) => {
-  try {
-    console.log('Project removed with id:', projectId)
-  } catch (error) {
-    console.error('Error removing project:', error)
-  }
-}
-
 const openModalProjectRemove = () => {
-  emit('openModalProjectRemove', {
+  modalProjectRemoveStore.setModalData({
     project: props.project
   })
+
+  modalProjectRemoveStore.setShowModal(true)
 }
 </script>
 

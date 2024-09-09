@@ -30,11 +30,13 @@
 import FormInput from '../form/FormInput.vue'
 import PageHeader from '../pages/PageHeader.vue'
 import { ref, computed } from 'vue'
-import projectService from '~/services/projectService'
 import { useRoute, useRouter } from 'vue-router'
 import { validateForm } from '~/helpers/form'
 import type { Project } from '~/types/project.d.ts'
+import { useProjectsStore } from '~/stores/projects'
 const { show: showToast } = useToast()
+const projectsStore = useProjectsStore()
+
 
 type FieldConfig = {
   value: ValueOf<Project>;
@@ -101,7 +103,7 @@ const getProject = async () => {
       return
     }
 
-    const projectData = await projectService.getProject(projectId)
+    const projectData = await projectsStore.getProject(projectId)
 
     Object.keys(projectData).forEach((key) => {
       const value = (projectData[key as keyof Project]) as ValueOf<Project>
@@ -111,7 +113,6 @@ const getProject = async () => {
         field.value = value
       } 
     })
-    // formFields.value = projectData
     
   } catch (error) {
     console.error('Erro ao buscar projeto:', error)
@@ -144,10 +145,10 @@ const handleSubmit = async () => {
 
       switch (formType) {
         case 'create':
-          await projectService.createProject(project)
+          await projectsStore.createProject(project)
           break;
         case 'update':
-          await projectService.updateProject(projectId, project)
+          await projectsStore.updateProject(projectId, project)
           break;
       }
 

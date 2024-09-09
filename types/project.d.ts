@@ -7,3 +7,5 @@ export interface Project {
   image?: string
   favorite?: boolean
 }
+
+type OrderBy = 'alphabetical' | 'start_date' | 'end_date'

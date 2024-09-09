@@ -10,7 +10,7 @@
     </div>
     <div class="d-flex gap-2" v-if="showFilters || showCreateButton">
       <div class="d-flex gap-2 align-items-center" v-if="showFilters">
-        <b-form-checkbox v-model="onlyFavorites" switch @change="emitFilterChanged" class="w-100">Apenas Favoritos</b-form-checkbox>
+        <b-form-checkbox v-model="favoritesOnly" switch class="w-100">Apenas Favoritos</b-form-checkbox>
         <client-only>
           <b-dropdown v-model="showOrderByOptions" variant="light" class="select-order-by" no-caret>
             <template #button-content>
@@ -18,8 +18,8 @@
               <i :class="!showOrderByOptions ? 'bi bi-chevron-down' : 'bi bi-chevron-up'"></i>
             </template>
             <template v-for="(option, index) in orderByOptions" :key="option.value">
-              <b-dropdown-item @click="emitSortChanged(option.value)">{{ option.text }}</b-dropdown-item>
-              <template  v-if="index < orderByOptions.length - 1">
+              <b-dropdown-item @click="handleOrderByChange(option.value)">{{ option.text }}</b-dropdown-item>
+              <template v-if="index < orderByOptions.length - 1">
                 <b-dropdown-divider />
               </template>
             </template>
@@ -29,9 +29,7 @@
       <div v-if="showCreateButton">
         <nuxt-link to="/project/create">
           <b-button variant="primary" pill>
-            <div class="d-flex gap-1">
-              Criar novo projeto
-            </div>
+            Criar novo projeto
           </b-button>
         </nuxt-link>
       </div>
@@ -39,8 +37,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useProjectsStore } from '~/stores/projects'
+import type { OrderBy } from '~/types/project'
+
+interface OrderByOption {
+  value: OrderBy
+  text: string
+}
+
+const projectsStore = useProjectsStore()
 
 const props = defineProps({
   pageTitle: {
@@ -69,11 +76,16 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['filter-changed', 'sort-changed'])
-const onlyFavorites = ref(false)
-const orderBy = ref('alphabetical')
+const favoritesOnly = computed({
+  get: () => projectsStore.filters.favorites_only,
+  set: (value) => projectsStore.setFilters('favorites_only', value)
+})
+const orderBy = computed({
+  get: () => projectsStore.filters.order_by,
+  set: (value) => projectsStore.setFilters('order_by', value)
+})
 const showOrderByOptions = ref(false)
-const orderByOptions = ref([
+const orderByOptions = ref<OrderByOption[]>([
   {
     value: 'alphabetical',
     text: 'Ordem alfabética'
@@ -88,20 +100,15 @@ const orderByOptions = ref([
   }
 ])
 
-const emitFilterChanged = () => {
-  emit('filter-changed', { favorite: onlyFavorites.value })
-}
-
-const emitSortChanged = (order) => {
-  orderBy.value = order
-
-  emit('sort-changed', order)
+const handleOrderByChange = (value: OrderBy) => {
+  orderBy.value = value
 }
 
 const selectedOrderByOptionText = computed(() => {
-  const option = orderByOptions.value.find(option => option.value === orderBy.value);
-  return option ? option.text : '';
-});
+  const option = orderByOptions.value.find((option) => option.value === orderBy.value)
+
+  return option ? option.text : ''
+})
 </script>
 
 <style scoped lang="scss">
@@ -117,7 +124,6 @@ const selectedOrderByOptionText = computed(() => {
 }
 </style>
 <style lang="scss">
-
 .select-order-by {
   min-width: 296px;
 
@@ -167,6 +173,7 @@ const selectedOrderByOptionText = computed(() => {
         font-weight: 400;
         line-height: 16px;
       }
+
       .dropdown-divider {
         margin: unset;
         border-color: #ECECEC;

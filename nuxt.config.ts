@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@bootstrap-vue-next/nuxt'],
+  modules: ['@bootstrap-vue-next/nuxt', '@pinia/nuxt'],
   css: [
     'bootstrap-icons/font/bootstrap-icons.css',
     '@/assets/styles/global.scss'

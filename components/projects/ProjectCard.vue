@@ -23,12 +23,11 @@
                 </b-dropdown-item>
               </nuxt-link>
               <b-dropdown-divider></b-dropdown-divider>
-              <b-dropdown-item v-b-modal.modal-center>
+              <b-dropdown-item @click="openModalProjectRemove">
                 <div class="d-flex gap-2">
                   <i class="bi bi-trash3"></i>
                   Remover
                 </div>
-                <project-remove :project="project" @remove:project="removeProject" />
               </b-dropdown-item>
             </b-dropdown>
           </client-only>
@@ -58,7 +57,6 @@
 </template>
 
 <script setup>
-import ProjectRemove from './ProjectRemove.vue'
 import defaultImage from '~/assets/images/image.png'
 import projectService from '~/services/projectService.ts'
 
@@ -75,10 +73,13 @@ const props = defineProps({
       image: '',
       favorite: false
     })
-  }
+  },
+
 })
 
-const emit = defineEmits(['update:favorite'])
+const emit = defineEmits([
+  'update:favorite', 'openModalProjectRemove'
+])
 
 const formatDate = (dateString) => {
   if (!dateString) return ''
@@ -106,6 +107,12 @@ const removeProject = async (projectId) => {
   } catch (error) {
     console.error('Error removing project:', error)
   }
+}
+
+const openModalProjectRemove = () => {
+  emit('openModalProjectRemove', {
+    project: props.project
+  })
 }
 </script>
 

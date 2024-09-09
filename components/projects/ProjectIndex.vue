@@ -15,9 +15,10 @@
     </div>
     <div v-else class="d-flex flex-wrap gap-3 justify-content-start">
       <project-card v-for="project in projects" :key="project.id" :project="project" class="project-card"
-        @update:favorite="updateFavorite" />
+        @update:favorite="updateFavorite" @openModalProjectRemove="openModalProjectRemove($event)"/>
     </div>
   </div>
+  <project-remove ref="project-remove"/>
 </template>
 
 <script setup>
@@ -25,10 +26,12 @@ import { ref, onMounted } from 'vue'
 import PageHeader from '../pages/PageHeader.vue'
 import ProjectCard from './ProjectCard.vue'
 import projectService from '~/services/projectService.ts'
+import ProjectRemove from './ProjectRemove.vue'
 
 const projects = ref([])
 const sortOrder = ref('')
 const filterFavorites = ref(false)
+const projectRemoveRef = useTemplateRef('project-remove');
 
 const fetchProjects = async () => {
   try {
@@ -74,6 +77,10 @@ const updateFavorite = async (updatedProject) => {
   } catch (error) {
     console.error('Error updating favorite status:', error)
   }
+}
+
+const openModalProjectRemove = (modalData) => {
+  projectRemoveRef.value.openModal(modalData)
 }
 
 onMounted(() => {

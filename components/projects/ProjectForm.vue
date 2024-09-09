@@ -194,7 +194,7 @@ onMounted(() => {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 52px;
+    padding: 52px 48px;
 
     .project-form {
       max-width: 704px;

@@ -1,3 +1,58 @@
 {
-  "projects": []
+  "projects": [
+    {
+      "id": "697c",
+      "name": "Playlist Rock",
+      "client": "Spotify",
+      "start_date": "2024-09-04",
+      "end_date": "2024-09-19",
+      "image": "",
+      "favorite": false
+    },
+    {
+      "id": "68e4",
+      "name": "Playlist Metal",
+      "client": "Youtube Music",
+      "start_date": "2024-10-02",
+      "end_date": "2024-10-12",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": "bc93",
+      "name": "Abacate",
+      "client": "Comida",
+      "start_date": "2024-10-22",
+      "end_date": "2024-10-26",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": "2c57",
+      "name": "Leopardo",
+      "client": "Animal",
+      "start_date": "2024-09-07",
+      "end_date": "2024-09-27",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": "cab3",
+      "name": "Johni",
+      "client": "O tal do maioral...",
+      "start_date": "2024-09-27",
+      "end_date": "2024-09-30",
+      "image": "",
+      "favorite": true
+    },
+    {
+      "id": "267d",
+      "name": "Cup Noodle",
+      "client": "Sabor galinha caipira apimentadinha",
+      "start_date": "2024-09-14",
+      "end_date": "2024-09-30",
+      "image": "",
+      "favorite": true
+    }
+  ]
 }

@@ -4,29 +4,27 @@
       <div class="project-card-image">
         <img :src="project.image || defaultImage" alt="Project Image">
         <div class="project-card-actions">
-          <b-button variant="primary" class="btn-transparent" @click="toggleFavorite">
+          <b-button variant="primary" class="btn-transparent project-card-actions-favorite" @click="toggleFavorite">
             <i class="bi" :class="project.favorite ? 'bi-star-fill text-warning' : 'bi-star'"></i>
           </b-button>
           <client-only>
-            <b-dropdown variant="link" no-caret>
+            <b-dropdown class="project-card-actions-dropdown" no-caret>
               <template #button-content>
-                <b-button pill variant="light">
-                  <i class="bi bi-three-dots"></i>
-                </b-button>
+                <i class="bi bi-three-dots"></i>
               </template>
               <nuxt-link :to="`/project/${project.id}`" class="text-decoration-none">
                 <b-dropdown-item>
-                  <div class="d-flex gap-2">
-                    <i class="bi bi-pencil-square"></i>
-                    Editar
+                  <div class="d-flex align-items-center" style="gap: 12px">
+                    <i class="bi bi-pencil-square dropdown-icon"></i>
+                    <span class="dropdown-text">Editar</span>
                   </div>
                 </b-dropdown-item>
               </nuxt-link>
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item @click="openModalProjectRemove">
                 <div class="d-flex gap-2">
-                  <i class="bi bi-trash3"></i>
-                  Remover
+                  <i class="bi bi-trash3 dropdown-icon"></i>
+                  <span class="dropdown-text">Remover</span>
                 </div>
               </b-dropdown-item>
             </b-dropdown>
@@ -37,27 +35,30 @@
 
     <template #header>
       <h5 class="project-card-title">{{ project.name }}</h5>
-      <p class="project-card-text">
+      <p class="project-card-client">
         <b>Cliente:</b>
-        {{ project.client }}
+        <span class="project-card-client-text">{{ project.client }}</span>
       </p>
     </template>
 
-    <div class="project-card-text d-flex flex-column">
-      <div class="d-flex align-items-center mb-2">
-        <i class="bi bi-calendar-event me-2"></i>
-        <span>{{ formatDate(project.start_date) }}</span>
+    <template #default>
+      <hr class="hr-separator">
+      <div class="project-body-container d-flex flex-column">
+        <div class="d-flex align-items-center mb-2">
+          <i class="bi bi-calendar-event project-card-date-icon"></i>
+          <span class="project-card-date-text">{{ formatDate(project.start_date) }}</span>
+        </div>
+        <div class="d-flex align-items-center">
+          <i class="bi bi-calendar-check project-card-date-icon"></i>
+          <span class="project-card-date-text">{{ formatDate(project.end_date) }}</span>
+        </div>
       </div>
-      <div class="d-flex align-items-center">
-        <i class="bi bi-calendar-check me-2"></i>
-        <span>{{ formatDate(project.end_date) }}</span>
-      </div>
-    </div>
+    </template>
   </b-card>
 </template>
 
 <script setup>
-import defaultImage from '~/assets/images/image.png'
+import defaultImage from '~/assets/images/project-card-placeholder.png'
 import { useProjectsStore } from '~/stores/projects'
 import { useModalProjectRemove } from '~/stores/modalProjectRemove'
 const projectsStore = useProjectsStore()
@@ -113,34 +114,152 @@ const openModalProjectRemove = () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .project-card {
-  max-width: 346px;
-  max-height: 430.479px;
-  overflow: hidden;
-}
-
-.project-card-image {
-  position: relative;
   width: 100%;
-}
+  height: 100%;
+  border-radius: 16px;
+  border: 1px solid #DCDCDC;
 
-.project-card-actions {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
+  .project-card-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px 16px 0 0;
 
-.project-card-title {
-  color: #1F1283;
-  font-size: 20px;
-  font-weight: 700;
-}
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px 16px 0 0;
+    }
+  }
 
-.project-card-text {
-  color: #717171;
-  font-size: 16px;
+  .project-card-actions {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .project-card-actions-favorite {
+    padding: 5px 5px;
+    i {
+      display: flex;
+      font-size: 18px;
+    }
+  }
+
+  .dropdown-menu {
+    min-width: 100%;
+    padding: unset;
+    border-radius: 8px;
+    border-color: transparent;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    li {
+
+      button {
+        padding: 14px 20px;
+        color: #1C1930;
+        font-feature-settings: 'liga' off, 'clig' off;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 16px;
+      }
+
+      .dropdown-divider {
+        margin: unset;
+        border-color: #F4F2FF;
+        opacity: 1;
+      }
+
+      .dropdown-icon {
+        display: flex;
+        font-size: 24px;
+        color: $primary;
+      }
+
+      .dropdown-text {
+        color: $primary;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1;
+      }
+    }
+  }
+
+  .project-card-actions-dropdown {
+    .btn {
+      background-color: #fff;
+      border-radius: 100%;
+      padding: 5px 5px;
+
+      i {
+        display: flex;
+        color: $primary;
+        font-size: 22px;
+      }
+    }
+  }
+
+  .project-card-title {
+    color: #1F1283;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .project-card-client {
+    color: #717171;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: unset;
+
+    .project-card-client-text {
+      margin-left: 6px;
+      color: #717171;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+
+  .card-header {
+    padding-block: 16px 24px;
+    border-bottom: unset;
+    background-color: #fff;
+  }
+
+  .card-body {
+    padding-block: unset;
+    padding-inline: 24px;
+  }
+
+  .project-body-container {
+    padding-block: 16px;
+  }
+
+  .hr-separator {
+    margin: unset;
+    color: #ECECEC;
+    opacity: 1;
+  }
+
+  .project-card-date-icon {
+    font-size: 24px;
+  }
+
+  .project-card-date-text {
+    margin-left: 16px;
+    color: #717171;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+  }
 }
 </style>

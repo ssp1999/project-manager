@@ -1,37 +1,39 @@
 <template>
-  <nuxt-link to="/" class="text-decoration-none" v-if="returnLink">
-    <i class="bi bi-arrow-left"></i>
-    <span class="px-2">Voltar</span>
-  </nuxt-link>
-  <div class="d-flex justify-content-between align-items-center w-100">
-    <div class="d-flex align-items-center">
-      <h1 class="page-title">{{ pageTitle }}</h1>
-      <span class="counter" v-if="showCounter">({{ counter }})</span>
-    </div>
-    <div class="d-flex gap-2" v-if="showFilters || showCreateButton">
-      <div class="d-flex gap-2 align-items-center" v-if="showFilters">
-        <b-form-checkbox v-model="favoritesOnly" switch class="w-100">Apenas Favoritos</b-form-checkbox>
-        <client-only>
-          <b-dropdown v-model="showOrderByOptions" variant="light" class="select-order-by" no-caret>
-            <template #button-content>
-              {{ selectedOrderByOptionText }}
-              <i :class="!showOrderByOptions ? 'bi bi-chevron-down' : 'bi bi-chevron-up'"></i>
-            </template>
-            <template v-for="(option, index) in orderByOptions" :key="option.value">
-              <b-dropdown-item @click="handleOrderByChange(option.value)">{{ option.text }}</b-dropdown-item>
-              <template v-if="index < orderByOptions.length - 1">
-                <b-dropdown-divider />
-              </template>
-            </template>
-          </b-dropdown>
-        </client-only>
+  <div class="page-header">
+    <nuxt-link to="/" class="text-decoration-none" v-if="returnLink">
+      <i class="bi bi-arrow-left"></i>
+      <span class="px-2">Voltar</span>
+    </nuxt-link>
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div class="d-flex align-items-center">
+        <h1 class="page-title">{{ pageTitle }}</h1>
+        <span class="counter" v-if="showCounter">({{ counter }})</span>
       </div>
-      <div v-if="showCreateButton">
-        <nuxt-link to="/project/create">
-          <b-button variant="primary" pill>
-            Criar novo projeto
-          </b-button>
-        </nuxt-link>
+      <div class="d-flex gap-3" v-if="showFilters || showCreateButton">
+        <div class="d-flex gap-4 align-items-center" v-if="showFilters">
+          <b-form-checkbox v-model="favoritesOnly" switch class="toggle-favorites">Apenas Favoritos</b-form-checkbox>
+          <client-only>
+            <b-dropdown v-model="showOrderByOptions" variant="light" class="select-order-by" no-caret>
+              <template #button-content>
+                {{ selectedOrderByOptionText }}
+                <i :class="!showOrderByOptions ? 'bi bi-chevron-down' : 'bi bi-chevron-up'"></i>
+              </template>
+              <template v-for="(option, index) in orderByOptions" :key="option.value">
+                <b-dropdown-item @click="handleOrderByChange(option.value)">{{ option.text }}</b-dropdown-item>
+                <template v-if="index < orderByOptions.length - 1">
+                  <b-dropdown-divider />
+                </template>
+              </template>
+            </b-dropdown>
+          </client-only>
+        </div>
+        <div v-if="showCreateButton">
+          <nuxt-link to="/project/create">
+            <b-button variant="primary" pill class="px-4">
+              Criar novo projeto
+            </b-button>
+          </nuxt-link>
+        </div>
       </div>
     </div>
   </div>
@@ -130,18 +132,56 @@ const selectedOrderByOptionText = computed(() => {
 </script>
 
 <style scoped lang="scss">
+.page-header {
+  margin-bottom: 22px;
+}
+
 .page-title {
   color: #1F1283;
   font-size: 24px;
   font-weight: 600;
+  line-height: normal;
+  margin-bottom: unset;
 }
 
 .counter {
+  margin-left: 6px;
   color: #695CCD;
   font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 </style>
 <style lang="scss">
+.toggle-favorites {
+  margin-bottom: unset;
+  padding: unset;
+
+  .form-check-input {
+    margin: unset;
+    width: 48px;
+    height: 24px;
+
+    &:checked {
+      background-color: #FFB23D;
+      border-color: #FFB23D
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(255, 178, 61, 0.25);
+    }
+  }
+
+  .form-check-label {
+    color: #1E1E1E;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    margin-left: 8px;
+  }
+}
+
 .select-order-by {
   min-width: 296px;
 
@@ -182,7 +222,6 @@ const selectedOrderByOptionText = computed(() => {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
     li {
-
       button {
         padding: 18px 16px;
         color: #1C1930;

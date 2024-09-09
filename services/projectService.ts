@@ -62,7 +62,7 @@ export default {
     }
   },
 
-  async toggleFavorite(id: number, favorite: boolean): Promise<Project> {
+  async toggleFavorite(id: string, favorite: boolean): Promise<Project> {
     try {
       const config = useRuntimeConfig()
       const apiBase = config.public.apiBase
@@ -87,7 +87,7 @@ export default {
     }
   },
 
-  async getProject(id: number): Promise<Project> {
+  async getProject(id: string): Promise<Project> {
     try {
       const config = useRuntimeConfig()
       const apiBase = config.public.apiBase
@@ -130,7 +130,7 @@ export default {
     }
   },
 
-  async updateProject(id: number, updatedProject: Project): Promise<Project> {
+  async updateProject(id: string, updatedProject: Project): Promise<Project> {
     try {
       const config = useRuntimeConfig()
       const apiBase = config.public.apiBase
@@ -155,7 +155,7 @@ export default {
     }
   },
 
-  async deleteProject(id: number): Promise<void> {
+  async deleteProject(id: string): Promise<void> {
     try {
       const config = useRuntimeConfig()
       const apiBase = config.public.apiBase

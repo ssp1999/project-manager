@@ -47,7 +47,8 @@ type FormFields = {
 
 const route = useRoute()
 const router = useRouter()
-const projectId = route.params.id 
+const projectId: string = route.params.id as string
+const formType = !projectId ? 'create' : 'update'
 
 const props = defineProps({
   formType: {
@@ -93,24 +94,30 @@ const formFields = ref<FormFields>({
     }
   })
 
-// const getProject = async () => {
-//   try {
-//     const projectData = await projectService.getProject(projectId)
-//     console.log(projectData)
-//     formFields.value = projectData
-    
-//   } catch (error) {
-//     console.error('Erro ao buscar projeto:', error)
-//   }
-// }
+const getProject = async () => {
+  try {
+    const projectData = await projectService.getProject(projectId)
 
-// onMounted(getProject)
+    Object.keys(projectData).forEach((key) => {
+      const value = (projectData[key as keyof Project]) as ValueOf<Project>
+      const field = formFields.value[key as keyof Project];
+
+      if (field) {
+        field.value = value
+      } 
+    })
+    // formFields.value = projectData
+    
+  } catch (error) {
+    console.error('Erro ao buscar projeto:', error)
+  }
+}
 
 const handleSubmit = async () => {
   isSubmitted.value = true
 
   const isInvalid = Object.keys(formFields.value).some((key) => {
-    const data = formFields.value[key as keyof FormFields]
+    const data = formFields.value[key as keyof Project]
 
     if (data !== undefined) {
       return data.required && !validateForm(data.value, data.type)
@@ -130,7 +137,14 @@ const handleSubmit = async () => {
         favorite: formData?.favorite ? formData.favorite.value as boolean : false,
       }
 
-      const newProject = await projectService.createProject(project)
+      switch (formType) {
+        case 'create':
+          await projectService.createProject(project)
+          break;
+        case 'update':
+          await projectService.updateProject(projectId, project)
+          break;
+      }
 
       router.push('/')
     } catch (error) {
@@ -154,6 +168,10 @@ const handleSubmit = async () => {
 //     reader.readAsDataURL(file)
 //   })
 // }
+
+onMounted(() => {
+  getProject()
+})
 </script>
 
 <style scoped>

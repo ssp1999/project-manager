@@ -33,25 +33,34 @@ const sortOrder = ref('')
 const filterFavorites = ref(false)
 const projectRemoveRef = useTemplateRef('project-remove');
 
+const handleFetchedProjects = (fetchedProjects) => {
+  if (filterFavorites.value) {
+    fetchedProjects = fetchedProjects.filter(project => project.favorite)
+  }
+
+  if (sortOrder.value) {
+    switch (sortOrder.value) {
+      case 'alphabetical':
+        fetchedProjects.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+        break;
+      case 'start_date':
+        fetchedProjects.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+        break;
+      case 'end_date':
+        fetchedProjects.sort((a, b) => new Date(a.end_date) - new Date(b.end_date))
+        break;
+    }
+  }
+
+  projects.value = fetchedProjects
+}
+
 const fetchProjects = async () => {
   try {
     let fetchedProjects = await projectService.getProjects()
 
-    if (filterFavorites.value) {
-      fetchedProjects = fetchedProjects.filter(project => project.favorite)
-    }
-
-    if (sortOrder.value) {
-      if (sortOrder.value === 'alphabetical') {
-        fetchedProjects.sort((a, b) => a.name.localeCompare(b.name))
-      } else if (sortOrder.value === 'start_date') {
-        fetchedProjects.sort((a, b) => new Date(b.start_date) - new Date(a.start_date))
-      } else if (sortOrder.value === 'end_date') {
-        fetchedProjects.sort((a, b) => new Date(a.end_date) - new Date(b.end_date))
-      }
-    }
-
-    projects.value = fetchedProjects
+    handleFetchedProjects(fetchedProjects)
+    
   } catch (error) {
     console.error('Erro ao buscar projetos:', error)
   }

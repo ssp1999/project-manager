@@ -26,7 +26,7 @@
 
 <script setup>
 import projectService from '~/services/projectService.ts'
-import { ref, defineExpose } from 'vue'
+import { ref } from 'vue'
 
 const project = ref({})
 const showModal = ref(false);

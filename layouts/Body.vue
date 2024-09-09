@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <nuxt-layout>
       <nuxt-page />
     </nuxt-layout>
@@ -11,4 +11,8 @@ import { ref } from 'vue'
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.body {
+  margin: 60px 42px;
+}
+</style>

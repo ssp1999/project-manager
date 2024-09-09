@@ -30,6 +30,7 @@ import { ref, defineExpose } from 'vue'
 
 const project = ref({})
 const showModal = ref(false);
+const { show: showToast } = useToast()
 
 const closeModal = () => {
   showModal.value = false
@@ -39,8 +40,21 @@ const confirmRemove = async () => {
   try {
     await projectService.deleteProject(project.value.id)
 
+    showToast?.({
+      props: {
+        variant: 'success',
+        body: 'Projeto removido com sucesso!',
+      },
+    })
     closeModal()
   } catch (error) {
+    showToast?.({
+      props: {
+        variant: 'danger',
+        body: 'Ocorreu um erro ao remover o projeto',
+      },
+    })
+
     console.error('Error removing project:', error)
   }
 }

@@ -22,7 +22,7 @@
           <b-button pill block variant="primary" size="lg" type="submit">Salvar projeto</b-button>
         </div>
       </b-form>
-    </b-card>
+    </b-card> 
   </div>
 </template>
 
@@ -34,6 +34,7 @@ import projectService from '~/services/projectService'
 import { useRoute, useRouter } from 'vue-router'
 import { validateForm } from '~/helpers/form'
 import type { Project } from '~/types/project.d.ts'
+const { show: showToast } = useToast()
 
 type FieldConfig = {
   value: ValueOf<Project>;
@@ -96,6 +97,10 @@ const formFields = ref<FormFields>({
 
 const getProject = async () => {
   try {
+    if (!projectId) {
+      return
+    }
+
     const projectData = await projectService.getProject(projectId)
 
     Object.keys(projectData).forEach((key) => {
@@ -146,8 +151,21 @@ const handleSubmit = async () => {
           break;
       }
 
+      showToast?.({
+        props: {
+          variant: 'success',
+          body: formType === 'create' ? 'Projeto criado com sucesso!' : 'Projeto atualizado com sucesso!',
+        },
+      })
       router.push('/')
     } catch (error) {
+      showToast?.({
+        props: {
+          variant: 'danger',
+          body: formType === 'create' ? 'Ocorreu um erro ao criar o projeto' : 'Ocorreu um erro ao atualizar o projeto',
+        },
+      })
+
       console.error('Erro ao criar o projeto:', error)
     }
   }

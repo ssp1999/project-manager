@@ -3,6 +3,7 @@
     <Header />
 
     <Body />
+    <BToastOrchestrator />
   </div>
 </template>
 

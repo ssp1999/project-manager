@@ -82,8 +82,13 @@ const emit = defineEmits(['update:favorite'])
 
 const formatDate = (dateString) => {
   if (!dateString) return ''
-  const options = { year: 'numeric', month: 'long', day: 'numeric' }
-  return new Date(dateString).toLocaleDateString('pt-BR', options)
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }
+
+  return new Date(`${dateString}T00:00:00`).toLocaleDateString('pt-BR', options)
 }
 
 const toggleFavorite = async () => {

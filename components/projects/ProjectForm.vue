@@ -4,25 +4,34 @@
 
     <b-card class="project-form-card d-flex justify-content-center align-items-center">
       <b-form class="project-form" @submit.prevent="handleSubmit" novalidate>
-        <form-input label="Nome do projeto" id="project-name" v-model="formFields.name.value" :type="formFields.name.type" :required="formFields.name.required"
-          :isSubmitted="isSubmitted" />
-        <form-input label="Cliente" id="client" v-model="formFields.client.value" :required="formFields.client.required" :type="formFields.client.type" :isSubmitted="isSubmitted" />
         <div class="row">
-          <div class="col-12 col-md-6 mb-3">
-            <form-input label="Data de início" id="start-date" v-model="formFields.start_date.value" :type="formFields.start_date.type" :required="formFields.start_date.required"
+          <div class="project-form-group-wrapper col-12">
+            <form-input label="Nome do projeto" id="project-name" v-model="formFields.name.value"
+              :type="formFields.name.type" :required="formFields.name.required" :isSubmitted="isSubmitted" />
+          </div>
+          <div class="project-form-group-wrapper col-12">
+            <form-input label="Cliente" id="client" v-model="formFields.client.value" :required="formFields.client.required"
+              :type="formFields.client.type" :isSubmitted="isSubmitted" />
+          </div>
+          <div class="project-form-group-wrapper col-12 col-md-6">
+            <form-input label="Data de início" id="start-date" v-model="formFields.start_date.value"
+              :type="formFields.start_date.type" :required="formFields.start_date.required"
               :isSubmitted="isSubmitted" />
           </div>
-          <div class="col-12 col-md-6 mb-3">
-            <form-input label="Data final" id="end-date" v-model="formFields.end_date.value" :type="formFields.end_date.type" :required="formFields.end_date.required"
-              :isSubmitted="isSubmitted" />
+          <div class="project-form-group-wrapper col-12 col-md-6">
+            <form-input label="Data final" id="end-date" v-model="formFields.end_date.value"
+              :type="formFields.end_date.type" :required="formFields.end_date.required" :isSubmitted="isSubmitted" />
+          </div>
+          <div class="project-form-group-wrapper col-12">
+            <form-input label="Capa do projeto" id="img" :isSubmitted="isSubmitted" v-model="formFields.image.value"
+            :type="formFields.image.type" :required="formFields.image.required" />
           </div>
         </div>
-        <form-input label="Capa do projeto" id="img" :isSubmitted="isSubmitted" v-model="formFields.image.value" :type="formFields.image.type" :required="formFields.image.required"/>
         <div class="d-grid">
           <b-button pill block variant="primary" size="lg" type="submit">Salvar projeto</b-button>
         </div>
       </b-form>
-    </b-card> 
+    </b-card>
   </div>
 </template>
 
@@ -39,14 +48,14 @@ const projectsStore = useProjectsStore()
 
 
 type FieldConfig = {
-  value: ValueOf<Project>;
-  type: 'text' | 'date' | 'image' | 'boolean';
-  required: boolean;
-};
+  value: ValueOf<Project>
+  type: 'text' | 'date' | 'image' | 'boolean'
+  required: boolean
+}
 
 type FormFields = {
-  [F in keyof Project]: FieldConfig;
-};
+  [F in keyof Project]: FieldConfig
+}
 
 const route = useRoute()
 const router = useRouter()
@@ -64,38 +73,38 @@ const formTitle = computed(() => props.formType === 'create' ? 'Novo Projeto' : 
 const isSubmitted = ref(false)
 
 const formFields = ref<FormFields>({
-    name: {
-      value: '',
-      type: 'text',
-      required: true, 
-    },
-    client: {
-      value: '',
-      type: 'text',
-      required: true
-    },
-    
-    start_date: { 
-      value: '',
-      type: 'date',
-      required: true,
-    },
-    end_date: { 
-      value: '',
-      type: 'date',
-      required: true,
-    },
-    image: {
-      value: '',
-      type: 'image',
-      required: false
-    },
-    favorite: {
-      value: false,
-      type: 'boolean',
-      required: false
-    }
-  })
+  name: {
+    value: '',
+    type: 'text',
+    required: true,
+  },
+  client: {
+    value: '',
+    type: 'text',
+    required: true
+  },
+
+  start_date: {
+    value: '',
+    type: 'date',
+    required: true,
+  },
+  end_date: {
+    value: '',
+    type: 'date',
+    required: true,
+  },
+  image: {
+    value: '',
+    type: 'image',
+    required: false
+  },
+  favorite: {
+    value: false,
+    type: 'boolean',
+    required: false
+  }
+})
 
 const getProject = async () => {
   try {
@@ -107,13 +116,13 @@ const getProject = async () => {
 
     Object.keys(projectData).forEach((key) => {
       const value = (projectData[key as keyof Project]) as ValueOf<Project>
-      const field = formFields.value[key as keyof Project];
+      const field = formFields.value[key as keyof Project]
 
       if (field) {
         field.value = value
-      } 
+      }
     })
-    
+
   } catch (error) {
     console.error('Erro ao buscar projeto:', error)
   }
@@ -132,7 +141,7 @@ const handleSubmit = async () => {
 
   if (!isInvalid) {
     try {
-      const formData = formFields.value;
+      const formData = formFields.value
 
       const project: Project = {
         name: formData?.name ? formData.name.value as string : '',
@@ -146,10 +155,10 @@ const handleSubmit = async () => {
       switch (formType) {
         case 'create':
           await projectsStore.createProject(project)
-          break;
+          break
         case 'update':
           await projectsStore.updateProject(projectId, project)
-          break;
+          break
       }
 
       showToast?.({
@@ -185,11 +194,17 @@ onMounted(() => {
     width: 100%;
     display: flex;
     justify-content: center;
+    padding: 52px;
 
     .project-form {
       max-width: 704px;
       width: 100%;
     }
+  }
+
+  .project-form-group-wrapper {
+    margin-bottom: 32px;
+    padding-inline: 24px;
   }
 }
 </style>

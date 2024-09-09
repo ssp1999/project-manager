@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form-group :id="id" :description="description" :label="label" :label-for="id" :invalid-feedback="invalidFeedback"
-      :state="computedState" class="mb-3">
+      :state="computedState">
       <template #label>
         <div class="d-flex align-items-center">
           <h5 class="form-input-label mb-0">{{ label }}</h5>

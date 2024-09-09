@@ -84,6 +84,24 @@ const orderBy = computed({
   get: () => projectsStore.filters.order_by,
   set: (value) => projectsStore.setFilters('order_by', value)
 })
+const isSearching = computed(() => projectsStore.isSearching)
+const pageTitle = computed(() => {
+  if (isSearching.value) {
+    return 'Resultado da busca'
+  }
+  
+  return props.pageTitle
+})
+const showFilters = computed(() => {
+  if (isSearching.value) {
+    projectsStore.setFilters('favorites_only', false)
+    projectsStore.setFilters('order_by', 'alphabetical')
+
+    return false
+  }
+
+  return props.showFilters
+}) 
 const showOrderByOptions = ref(false)
 const orderByOptions = ref<OrderByOption[]>([
   {

@@ -1,16 +1,18 @@
 <template>
-  <b-navbar class="header" :class="{ 'header-search-mode': showSearch }">
-    <template v-if="!showSearch">
-      <b-container class="d-flex justify-content-center align-items-center">
+  <b-navbar class="header" :class="{ 'header-search-mode': showSearchInput }">
+    <template v-if="!showSearchInput">
+      <div class="d-flex justify-content-center align-items-center w-100">
         <img src="~/assets/images/symbol.png" class="text-white" alt="logo">
         <span class="text-white mx-3 title">Gerenciador<br> de Projetos</span>
-      </b-container>
-      <b-button variant="primary" class="btn-transparent btn-search" @click="toggleSearch(true)">
-        <i class="bi bi-search text-white icon-margin icon-search"></i>
-      </b-button>
+      </div>
+      <template v-if="showSearchButton">
+        <b-button variant="primary" class="btn-transparent btn-search" @click="toggleSearchInput(true)">
+          <i class="bi bi-search text-white icon-margin icon-search"></i>
+        </b-button>
+      </template>
     </template>
     <template v-else>
-      <b-button variant="secondary" class="btn-transparent" @click="toggleSearch(false)">
+      <b-button variant="secondary" class="btn-transparent" @click="toggleSearchInput(false)">
         <i class="bi bi-search text-primary icon-margin icon-search"></i>
       </b-button>
       <b-input type="search" class="h-100 search-input" size="lg" placeholder="Digite o nome do projeto..."
@@ -20,10 +22,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted  } from 'vue'
 import { useProjectsStore } from '~/stores/projects'
 
-const showSearch = ref(false)
+const showSearchInput = ref(false)
+const showSearchButton = ref(false)
 const store = useProjectsStore()
 
 const searchQuery = computed({
@@ -31,8 +34,33 @@ const searchQuery = computed({
   set: (value) => store.setFilters('search_query', value)
 })
 
-function toggleSearch(search) {
-  showSearch.value = search
+const route = useRoute();
+
+const validateSearchButton = () => {
+  const show = [ 'index' ].includes(route.name);
+
+  showSearchButton.value = show
+  showSearchInput.value = false
+  searchQuery.value = ''
+
+  if (!show) {
+    searchQuery.value = ''
+  }
+}
+
+watch(
+  () => route.name,
+  () => {
+    validateSearchButton();
+  }
+);
+
+onMounted(() => {
+  validateSearchButton()
+})
+
+function toggleSearchInput(search) {
+  showSearchInput.value = search
 }
 </script>
 

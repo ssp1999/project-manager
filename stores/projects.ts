@@ -46,7 +46,10 @@ export const useProjectsStore = defineStore('projectsStore', {
       }
 
       return filteredProjects
-    }
+    },
+    isSearching: (state): boolean => {
+      return state.filters.search_query !== ''
+    },
   },
   actions: {
     setFilters<K extends keyof State['filters']>(key: K, value: State['filters'][K]): void {

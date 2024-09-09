@@ -90,7 +90,7 @@ watchEffect(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.3125rem 0;
+    padding: 1.3125rem .875rem;
 
     .placeholder-upload-icon {
       display: flex;

@@ -1,5 +1,5 @@
 <template>
-  <div class="m-5">
+  <div>
     <page-header :pageTitle="formTitle" />
 
     <b-card class="project-form-card d-flex justify-content-center align-items-center">
@@ -205,6 +205,20 @@ onMounted(() => {
   .project-form-group-wrapper {
     margin-bottom: 2rem;
     padding-inline: 1.5rem;
+  }
+}
+
+.form-input-image-card {
+  .card-body {
+    padding: unset !important;
+  }
+}
+
+@media (max-width: 39rem) {
+  .project-form-card {
+    .card-body {
+      padding: 2.375rem 1.5rem;
+    }
   }
 }
 </style>

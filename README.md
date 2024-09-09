@@ -1,75 +1,51 @@
-# Nuxt 3 Minimal Starter
+# Gerenciador de Projetos
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Descrição
 
-## Setup
+O **Gerenciador de Projetos** é uma aplicação web que permite ao usuário visualizar, adicionar, editar, remover e favoritar projetos. A aplicação é composta por uma API utilizando JSON Server para o backend e uma interface de frontend interativa.
 
-Make sure to install the dependencies:
+## Instalação
 
-```bash
-# npm
-npm install
+Para configurar o projeto, siga estes passos:
 
-# pnpm
-pnpm install
+1. **Clone o repositório:**
 
-# yarn
-yarn install
+    ```bash
+    git clone https://github.com/ssp1999/project-manager
+    ```
 
-# bun
-bun install
-```
+2. **Navegue até o diretório do projeto:**
 
-## Development Server
+    ```bash
+    cd project-manager
+    ```
 
-Start the development server on `http://localhost:3000`:
+3. **Instale as dependências do projeto:**
 
-```bash
-# npm
-npm run dev
+    ```bash
+    npm install
+    ```
 
-# pnpm
-pnpm run dev
+4. **Construa o projeto para produção:**
 
-# yarn
-yarn dev
+    ```bash
+    npm run build
+    ```
 
-# bun
-bun run dev
-```
+5. **Inicie o servidor JSON Server:**
 
-## Production
+    ```bash
+    json-server --watch db.json --port 3001
+    ```
 
-Build the application for production:
+6. **Execute o projeto em modo de preview:**
 
-```bash
-# npm
-npm run build
+    ```bash
+    npm run preview
+    ```
 
-# pnpm
-pnpm run build
+## Executando o Projeto
 
-# yarn
-yarn build
+Após a configuração, você pode acessar a aplicação no navegador através do endereço:
 
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+[http://localhost:3000](http://localhost:3000)

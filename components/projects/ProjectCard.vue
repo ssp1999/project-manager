@@ -130,6 +130,7 @@ const openModalProjectRemove = () => {
     img {
       width: 100%;
       height: 100%;
+      max-height: 17.9375rem;
       object-fit: cover;
       border-radius: 16px 16px 0 0;
     }

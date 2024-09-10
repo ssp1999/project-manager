@@ -20,25 +20,33 @@ Para configurar o projeto, siga estes passos:
     cd project-manager
     ```
 
-3. **Instale as dependências do projeto:**
+3. **Crie o arquivo `.env` a partir do exemplo:**
+
+    ```bash
+    .env.example
+    ```
+
+4. **Configure o arquivo `.env` conforme necessário.**
+
+5. **Instale as dependências do projeto:**
 
     ```bash
     npm install
     ```
 
-4. **Construa o projeto para produção:**
+6. **Construa o projeto para produção:**
 
     ```bash
     npm run build
     ```
 
-5. **Inicie o servidor JSON Server:**
+7. **Inicie o servidor JSON Server:**
 
     ```bash
     json-server --watch db.json --port 3001
     ```
 
-6. **Execute o projeto em modo de preview:**
+8. **Execute o projeto em modo de preview:**
 
     ```bash
     npm run preview
@@ -49,3 +57,7 @@ Para configurar o projeto, siga estes passos:
 Após a configuração, você pode acessar a aplicação no navegador através do endereço:
 
 [http://localhost:3000](http://localhost:3000)
+
+## Observação
+
+Certifique-se de configurar corretamente as variáveis de ambiente no arquivo `.env` para que a API funcione conforme esperado.

@@ -1,7 +1,7 @@
 <template>
   <template v-if="showModal">
     <b-modal ref="modalProjectRemove" id="modal-project-remove" centered class="text-center modal-project-remove"
-      :model-value="showModal">
+      :model-value="showModal" no-close-on-backdrop>
       <template #header>
         <div class="modal-icon-container">
           <i class="bi bi-trash3 modal-icon"></i>

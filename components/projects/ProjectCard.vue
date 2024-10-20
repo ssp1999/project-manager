@@ -34,7 +34,12 @@
     </template>
 
     <template #header>
-      <h5 class="project-card-title" v-html="highlightedName"></h5>
+      <h5 class="project-card-title">
+        <span v-for="(part, index) in highlightedParts" :key="index" :class="{ highlight: part.isHighlighted }">
+          {{ part.text }}
+        </span>
+      </h5>
+
       <p class="project-card-client">
         <b>Cliente:</b>
         <span class="project-card-client-text">{{ project.client }}</span>
@@ -118,16 +123,19 @@ const searchQuery = computed({
   set: (value) => projectsStore.setFilters('search_query', value)
 })
 
-const highlightedName = computed(() => {
+const highlightedParts = computed(() => {
   const query = searchQuery.value.toLowerCase()
   const name = props.project.name.toLowerCase()
 
   if (!query || !name.includes(query)) {
-    return props.project.name
+    return [{ text: props.project.name, isHighlighted: false }]
   }
 
   const parts = name.split(new RegExp(`(${query})`, 'gi'))
-  return parts.map(part => (part.toLowerCase() === query ? `<span class="highlight">${part}</span>` : part)).join('')
+  return parts.map(part => ({
+    text: part,
+    isHighlighted: part.toLowerCase() === query,
+  }))
 })
 
 </script>

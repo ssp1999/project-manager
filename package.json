@@ -12,6 +12,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.4",
     "bootstrap-icons": "^1.11.3",
+    "firebase": "^11.0.1",
     "nuxt": "^3.13.0",
     "pinia": "^2.2.2",
     "vue": "latest",

@@ -1,22 +1,14 @@
 import type { Project } from '~/types/project.d.ts'
-
-interface ProjectFilters {
-  favorite?: boolean
-}
+import { db } from '~/firebase'
+import { collection, getDocs, getDoc, doc, setDoc, updateDoc, deleteDoc, addDoc } from 'firebase/firestore'
 
 export default {
   async fetchProjects(): Promise<Project[]> {
     try {
-      const config = useRuntimeConfig()
-      const apiBase = config.public.apiBase
-
-      const response = await fetch(`${apiBase}/projects`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch projects')
-      }
-
-      const data = await response.json()
-      return data as Project[]
+      const projectCollection = collection(db, 'projects')
+      const snapshot = await getDocs(projectCollection)
+      const projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project))
+      return projects
     } catch (error) {
       console.error('Error fetching projects:', error)
       throw error
@@ -25,16 +17,12 @@ export default {
 
   async getProject(id: string): Promise<Project> {
     try {
-      const config = useRuntimeConfig()
-      const apiBase = config.public.apiBase
-
-      const response = await fetch(`${apiBase}/projects/${id}`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch project')
+      const projectRef = doc(db, 'projects', id)
+      const projectDoc = await getDoc(projectRef)
+      if (!projectDoc.exists()) {
+        throw new Error('Project not found')
       }
-
-      const data = await response.json()
-      return data as Project
+      return { id: projectDoc.id, ...projectDoc.data() } as Project
     } catch (error) {
       console.error('Error fetching project:', error)
       throw error
@@ -43,23 +31,10 @@ export default {
 
   async createProject(newProject: Project): Promise<Project> {
     try {
-      const config = useRuntimeConfig()
-      const apiBase = config.public.apiBase
-
-      const response = await fetch(`${apiBase}/projects`, {
-        method: 'POST',
-        body: JSON.stringify(newProject),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to create project')
-      }
-
-      const data = await response.json()
-      return data as Project
+      const projectCollection = collection(db, 'projects')
+      const projectRef = await addDoc(projectCollection, newProject)
+      const projectDoc = await getDoc(projectRef)
+      return { id: projectDoc.id, ...projectDoc.data() } as Project
     } catch (error) {
       console.error('Error creating project:', error)
       throw error
@@ -68,23 +43,10 @@ export default {
 
   async updateProject(id: string, updatedProject: Project): Promise<Project> {
     try {
-      const config = useRuntimeConfig()
-      const apiBase = config.public.apiBase
-
-      const response = await fetch(`${apiBase}/projects/${id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(updatedProject),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to update project')
-      }
-
-      const data = await response.json()
-      return data as Project
+      const projectRef = doc(db, 'projects', id)
+      await updateDoc(projectRef, updatedProject)
+      const projectDoc = await getDoc(projectRef)
+      return { id: projectDoc.id, ...projectDoc.data() } as Project
     } catch (error) {
       console.error('Error updating project:', error)
       throw error
@@ -93,16 +55,8 @@ export default {
 
   async removeProject(id: string): Promise<void> {
     try {
-      const config = useRuntimeConfig()
-      const apiBase = config.public.apiBase
-
-      const response = await fetch(`${apiBase}/projects/${id}`, {
-        method: 'DELETE'
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to delete project')
-      }
+      const projectRef = doc(db, 'projects', id)
+      await deleteDoc(projectRef)
     } catch (error) {
       console.error('Error deleting project:', error)
       throw error

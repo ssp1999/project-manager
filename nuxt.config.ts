@@ -28,7 +28,8 @@ export default defineNuxtConfig({
           href: 'https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Expanded:wght@400;500;700&display=swap'
         },
       ]
-    }
+    },
+    baseURL: '/project-manager/'
   },
   runtimeConfig: {
     public: {

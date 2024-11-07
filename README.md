@@ -26,13 +26,18 @@ To set up the project, follow these steps:
     npm install
     ```
 
-4. **Build the project for production:**
+4. **Set up environment variables:**
+
+    Create a `.env` file in the root of your project based on the `.env.example` template provided in the repository. Add your Firebase configuration details:
+    Replace `your_api_key`, `your_auth_domain`, etc., with the actual configuration values from your Firebase project.
+
+5. **Build the project for production:**
 
     ```bash
     npm run build
     ```
 
-5. **Run the project in preview mode:**
+6. **Run the project in preview mode:**
 
     ```bash
     npm run preview
@@ -42,4 +47,4 @@ To set up the project, follow these steps:
 
 After setup, you can access the application in your browser at:
 
-[http://localhost:3000](http://localhost:3000)
+[http://localhost:3000/project-manager/](http://localhost:3000/project-manager/)
